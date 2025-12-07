@@ -271,38 +271,45 @@ class BotLogic:
         try:
             query_lower = query.lower()
 
-            # Detect query type and scrape specific pages
-            faculty_keywords = ['dean', 'faculty', 'head', 'professor', 'department']
-            is_faculty_query = any(keyword in query_lower for keyword in faculty_keywords)
-
-            if is_faculty_query:
+            if any(word in query_lower for word in ['admission', 'apply', 'application', 'requirements', 'entry']):
+                return self._scrape_admissions_page()
+            
+            if any(word in query_lower for word in ['dean', 'faculty', 'head', 'professor', 'department']):
                 return self._scrape_faculty_info()
+            
+            if any(word in query_lower for word in ['tuition', 'fee', 'cost', 'payment', 'price']):
+                return self._scrape_tuition_info()
+            
+            if any(word in query_lower for word in ['scholarship', 'discount', 'financial aid', 'bursary']):
+                return self._scrape_scholarship_info()
+            
+            if any(word in query_lower for word in ['dormitory', 'dorm', 'accommodation', 'housing', 'residence']):
+                return self._scrape_accommodation_info()
+            
+            if any(word in query_lower for word in ['international', 'foreign', 'visa', 'residence permit']):
+                return self._scrape_international_info()
 
-            # Try to scrape main NEU pages for general info
             neu_pages = {
-                'about': 'https://neu.edu.tr/hakkimizda/',
-                'academics': 'https://neu.edu.tr/akademik/',
-                'faculties': 'https://neu.edu.tr/akademik/fakulteler/',
-                'student': 'https://neu.edu.tr/ogrenci/',
-                'campus': 'https://neu.edu.tr/kampuste-yasam/',
+                'about': 'https://neu.edu.tr/en/about-us/',
+                'academics': 'https://neu.edu.tr/en/academic/',
+                'faculties': 'https://neu.edu.tr/en/academic/faculties/',
+                'student': 'https://neu.edu.tr/en/student/',
+                'campus': 'https://neu.edu.tr/en/campus-life/',
             }
 
-            # Determine which page to scrape based on query keywords
             page_to_scrape = None
             if any(word in query_lower for word in ['about', 'history', 'founded', 'established']):
                 page_to_scrape = neu_pages['about']
             elif any(word in query_lower for word in ['academic', 'program', 'course', 'degree']):
                 page_to_scrape = neu_pages['academics']
-            elif any(word in query_lower for word in ['student', 'registration', 'admission']):
+            elif any(word in query_lower for word in ['student', 'registration']):
                 page_to_scrape = neu_pages['student']
-            elif any(word in query_lower for word in ['campus', 'facility', 'dorm', 'library']):
+            elif any(word in query_lower for word in ['campus', 'facility', 'library']):
                 page_to_scrape = neu_pages['campus']
 
-            # Scrape the selected page
             if page_to_scrape:
                 return self._fetch_page_content(page_to_scrape, query)
 
-            # Fallback: Google site search
             return self._google_site_search(query)
 
         except Exception as e:
@@ -312,13 +319,116 @@ class BotLogic:
         return (
             "📚 <strong>Faculty Information</strong><br><br>"
             "For detailed information about faculty deans and leadership:<br><br>"
-            "👉 <strong><a href='https://neu.edu.tr/akademik/fakulteler/' target='_blank'>View All Faculties & Deans</a></strong><br><br>"
+            "👉 <strong><a href='https://neu.edu.tr/en/academic/faculties/' target='_blank'>View All Faculties & Deans</a></strong><br><br>"
             "You can find:<br>"
             "• Complete list of all 16 faculties<br>"
             "• Dean information and contact details<br>"
             "• Department heads and academic staff<br>"
             "• Faculty office locations and hours"
         )
+    
+    def _scrape_admissions_page(self) -> str:
+        return (
+            "🎓 <strong>Admissions Information</strong><br><br>"
+            "<strong>How to Apply:</strong><br>"
+            "1. Visit the online application portal<br>"
+            "2. Submit required documents (passport, diploma, transcript)<br>"
+            "3. Pay application fee<br>"
+            "4. Await acceptance letter<br><br>"
+            "📋 <strong><a href='https://neu.edu.tr/en/prospective-students/admission-requirements/' target='_blank'>View Full Admission Requirements</a></strong><br><br>"
+            "📧 Contact: admissions@neu.edu.tr<br>"
+            "📞 Phone: +90 392 680 20 00<br><br>"
+            "<strong>Application Periods:</strong><br>"
+            "• Fall Semester: June - September<br>"
+            "• Spring Semester: December - January"
+        )
+    
+    def _scrape_tuition_info(self) -> str:
+        return (
+            "💰 <strong>Tuition & Fees Information</strong><br><br>"
+            "Tuition fees vary by program and faculty:<br><br>"
+            "📊 <strong><a href='https://neu.edu.tr/en/prospective-students/tuition-fees/' target='_blank'>View Current Tuition Fees</a></strong><br><br>"
+            "<strong>Payment Options:</strong><br>"
+            "• Full payment (discounts available)<br>"
+            "• Installment plans<br>"
+            "• Bank transfer<br>"
+            "• Credit/Debit card at campus<br><br>"
+            "💳 Payment Location: Near East Bank (Main Campus)<br>"
+            "📧 Financial inquiries: finance@neu.edu.tr<br><br>"
+            "<strong>Additional Costs:</strong><br>"
+            "• Registration fees<br>"
+            "• Health insurance<br>"
+            "• Accommodation (if applicable)<br>"
+            "• Student card and materials"
+        )
+    
+    def _scrape_scholarship_info(self) -> str:
+        return (
+            "🎓 <strong>Scholarship Opportunities</strong><br><br>"
+            "NEU offers various scholarship programs:<br><br>"
+            "<strong>Scholarship Types:</strong><br>"
+            "• Academic Excellence Scholarships (25-100%)<br>"
+            "• Sports Scholarships<br>"
+            "• Sibling Discounts<br>"
+            "• Early Registration Discounts<br>"
+            "• Country-specific scholarships<br><br>"
+            "📋 <strong><a href='https://neu.edu.tr/en/prospective-students/scholarships/' target='_blank'>View All Scholarship Options</a></strong><br><br>"
+            "<strong>How to Apply:</strong><br>"
+            "Scholarships are typically evaluated during admission based on:<br>"
+            "• High school GPA<br>"
+            "• Entrance exam scores<br>"
+            "• Special talents or achievements<br><br>"
+            "📧 Contact: scholarships@neu.edu.tr<br>"
+            "💡 Tip: Apply early to increase scholarship chances!"
+        )
+    
+    def _scrape_accommodation_info(self) -> str:
+        return (
+            "🏠 <strong>Accommodation at NEU</strong><br><br>"
+            "<strong>On-Campus Dormitories:</strong><br>"
+            "• Male and female dormitories<br>"
+            "• Single, double, and triple rooms<br>"
+            "• All rooms furnished with beds, desks, wardrobes<br>"
+            "• 24/7 security and supervision<br>"
+            "• WiFi included<br><br>"
+            "📍 <strong><a href='https://neu.edu.tr/en/campus-life/accommodation/' target='_blank'>View Dormitory Details & Prices</a></strong><br><br>"
+            "<strong>Facilities:</strong><br>"
+            "• Common rooms and study areas<br>"
+            "• Laundry services<br>"
+            "• Cafeteria and dining halls<br>"
+            "• Recreation areas<br><br>"
+            "📧 Dormitory Office: dormitory@neu.edu.tr<br>"
+            "📞 Phone: +90 392 680 20 00 (ext. 2500)<br><br>"
+            "<strong>Off-Campus Options:</strong><br>"
+            "• Private apartments near campus<br>"
+            "• Shared housing with other students<br>"
+            "• Contact Student Affairs for assistance"
+        )
+    
+    def _scrape_international_info(self) -> str:
+        return (
+            "🌍 <strong>International Students Office</strong><br><br>"
+            "<strong>We assist with:</strong><br>"
+            "• Student visa applications<br>"
+            "• Residence permit processing<br>"
+            "• Equivalence certificates<br>"
+            "• Orientation programs<br>"
+            "• Integration support<br><br>"
+            "📍 <strong>Location:</strong> Rectorate Building, Ground Floor<br>"
+            "📧 Email: international@neu.edu.tr<br>"
+            "📞 Phone: +90 392 680 20 00<br><br>"
+            "🔗 <strong><a href='https://neu.edu.tr/en/international/' target='_blank'>Visit International Office Page</a></strong><br><br>"
+            "<strong>Required Documents:</strong><br>"
+            "• Valid passport<br>"
+            "• Acceptance letter from NEU<br>"
+            "• Health insurance<br>"
+            "• Proof of financial support<br>"
+            "• High school diploma & transcript<br><br>"
+            "<strong>Office Hours:</strong><br>"
+            "Monday - Friday: 9:00 AM - 5:00 PM<br><br>"
+            "💡 Visit us during orientation week for complete guidance!"
+        )
+
 
     def _fetch_page_content(self, url: str, query: str) -> Optional[str]:
         try:
@@ -383,44 +493,52 @@ class BotLogic:
         except:
             return None
 
-    def generate_response(self, message: str, session_id: str) -> str:
-        # Track conversation history
+    def generate_response(self, message: str, session_id: str, language: str = "EN") -> str:
         if session_id not in self.sessions:
             self.sessions[session_id] = []
 
         self.sessions[session_id].append(message)
 
-        # Clean the message
         message_cleaned = message.strip()
         msg_lower = message_cleaned.lower()
 
-        # Check for greeting
         if self._is_greeting(message_cleaned):
             return random.choice(self.greetings)
 
-        # Check for acknowledgments
         if self._is_acknowledgment(message_cleaned):
             answer = self._find_best_match(message_cleaned)
             if answer:
                 return answer
-            return "You're welcome! Is there anything else you'd like to know about Near East University?"
+            return "You're welcome! Is there anything else you'd like to know about Near East University?" if language == "EN" else "Rica ederim! Near East Üniversitesi hakkında başka bilgi almak ister misiniz?"
 
-        # Quick check for map or location keywords
         if "map" in msg_lower or "location" in msg_lower:
-            return "Here is the map location for Near East University: https://www.google.com/maps/place/Near+East+University/"
+            return "Here is the map location for Near East University: https://www.google.com/maps/place/Near+East+University/" if language == "EN" else "Near East Üniversitesi harita konumu: https://www.google.com/maps/place/Near+East+University/"
 
-        # Try to find matching FAQ answer
         answer = self._find_best_match(message_cleaned)
 
         if answer:
             return answer
 
-        # Try web scraping for unknown questions
         scraped_result = self._scrape_neu_website(message_cleaned)
         if scraped_result:
             return scraped_result
 
-        # Default fallback response with helpful links
+        if language == "TR":
+            return (
+                "Bu konuda veritabanımda henüz özel bilgi yok, ancak size yardımcı olabilirim!<br><br>"
+                "<strong>📚 Faydalı Kaynaklar:</strong><br>"
+                "• <a href='https://neu.edu.tr' target='_blank'>NEU Resmi Web Sitesi</a><br>"
+                "• <a href='https://www.google.com/maps?ll=35.226735,33.326385&z=15&t=m&hl=en&gl=ES&mapclient=embed&cid=13187758565112652345' target='_blank'>NEU Kampüs Haritası</a><br>"
+                "• <a href='https://neu.edu.tr/akademik/fakulteler/' target='_blank'>Fakülteler & Dekanlar</a><br>"
+                "• <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portalı</a> (Öğrenci Sistemi)<br>"
+                "• <a href='https://register.neu.edu.tr' target='_blank'>Genius Portalı</a> (Ders Kaydı)<br><br>"
+                "<strong>📞 Direkt İletişim:</strong><br>"
+                "• Uluslararası Ofis: international@neu.edu.tr<br>"
+                "• Öğrenci İşleri: student.affairs@neu.edu.tr<br>"
+                "• Ana Hat: +90 392 680 20 00<br><br>"
+                "Şunlar hakkında soru sorabilirsiniz: kayıt, fakülteler, dekanlar, kampüs haritası, kütüphane, yurtlar, vize, kampüs tesisleri veya öğrenim ücreti."
+            )
+        
         return (
             "I don't have specific information about that in my database yet, but I can help you find it!<br><br>"
             "<strong>📚 Useful Resources:</strong><br>"

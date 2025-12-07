@@ -10,7 +10,8 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 async def chat(request: ChatRequest) -> ChatResponse:
     try:
         session_id = request.session_id or str(uuid.uuid4())
-        bot_message = bot.generate_response(request.message, session_id)
+        language = request.language or "EN"
+        bot_message = bot.generate_response(request.message, session_id, language)
         
         response = ChatResponse(
             message=bot_message,

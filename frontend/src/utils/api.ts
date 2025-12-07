@@ -13,12 +13,14 @@ const apiClient = axios.create({
 
 export const sendMessage = async (
   message: string,
-  sessionId?: string
+  sessionId?: string,
+  language?: string
 ): Promise<ChatResponse> => {
   try {
     const payload: ChatRequest = {
       message,
       session_id: sessionId,
+      language: language || 'EN',
     };
 
     const response = await apiClient.post<ChatResponse>('/api/chat', payload);

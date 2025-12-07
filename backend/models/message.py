@@ -5,12 +5,14 @@ from pydantic import BaseModel, Field
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=1000, description="User's message")
     session_id: Optional[str] = Field(None, description="Session ID for conversation continuity")
+    language: Optional[str] = Field("EN", description="Language preference: EN or TR")
 
     class Config:
         json_schema_extra = {
             "example": {
                 "message": "When is the deadline for registration?",
-                "session_id": "abc123"
+                "session_id": "abc123",
+                "language": "EN"
             }
         }
 

@@ -2,22 +2,48 @@ import React, { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import { sendMessage } from '../utils/api';
 import type { Message } from '../types';
+import { TextField, IconButton, CircularProgress, Chip, Box, Tooltip } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
-const ChatWindow: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      content: 'Hello! I am the NEU Virtual Assistant. How can I help you today?',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-  ]);
+interface ChatWindowProps {
+  clearChatTrigger: number;
+  language: 'EN' | 'TR';
+}
+
+const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) => {
+  const initialMessage: Message = {
+    id: '1',
+    content: language === 'EN' 
+      ? 'Hello! I am the NEU Virtual Assistant. How can I help you today?'
+      : 'Merhaba! Ben NEU Sanal Asistanıyım. Bugün size nasıl yardımcı olabilirim?',
+    sender: 'bot',
+    timestamp: new Date(),
+  };
+
+  const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const quickActions = language === 'EN' ? [
+    "How do I register?",
+    "Tuition fees",
+    "Campus map",
+    "Scholarships",
+    "Dormitories",
+    "Faculties"
+  ] : [
+    "Nasıl kayıt olurum?",
+    "Öğrenim ücreti",
+    "Kampüs haritası",
+    "Burslar",
+    "Yurtlar",
+    "Fakülteler"
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -26,6 +52,33 @@ const ChatWindow: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    if (clearChatTrigger > 0) {
+      const newInitialMessage: Message = {
+        id: '1',
+        content: language === 'EN' 
+          ? 'Hello! I am the NEU Virtual Assistant. How can I help you today?'
+          : 'Merhaba! Ben NEU Sanal Asistanıyım. Bugün size nasıl yardımcı olabilirim?',
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      setMessages([newInitialMessage]);
+      setSessionId('');
+    }
+  }, [clearChatTrigger, language]);
+
+  useEffect(() => {
+    const newInitialMessage: Message = {
+      id: '1',
+      content: language === 'EN' 
+        ? 'Hello! I am the NEU Virtual Assistant. How can I help you today?'
+        : 'Merhaba! Ben NEU Sanal Asistanıyım. Bugün size nasıl yardımcı olabilirim?',
+      sender: 'bot',
+      timestamp: new Date(),
+    };
+    setMessages([newInitialMessage]);
+  }, [language]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +97,7 @@ const ChatWindow: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await sendMessage(inputValue, sessionId);
+      const response = await sendMessage(inputValue, sessionId, language);
 
       if (response.session_id) {
         setSessionId(response.session_id);
@@ -114,6 +167,28 @@ const ChatWindow: React.FC = () => {
             Today, {formatTimestamp(new Date())}
           </span>
         </div>
+        
+        {messages.length === 1 && (
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mt: 2 }}>
+            {quickActions.map((action) => (
+              <Chip
+                key={action}
+                label={action}
+                onClick={() => setInputValue(action)}
+                clickable
+                sx={{
+                  backgroundColor: '#f4f0f0',
+                  '&:hover': {
+                    backgroundColor: '#ebe7e7',
+                  },
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                }}
+              />
+            ))}
+          </Box>
+        )}
+        
         {messages.map((message) => (
           <MessageBubble key={message.id} message={message} />
         ))}
@@ -144,17 +219,7 @@ const ChatWindow: React.FC = () => {
       <div className="p-4 bg-white border-t border-[#f4f0f0] w-full">
         <div className="max-w-[960px] mx-auto w-full">
           <form onSubmit={handleSendMessage}>
-            <div className="flex items-end gap-2 bg-[#f8f6f6] rounded-xl p-2 border border-transparent focus-within:border-primary/30 focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/10 transition-all">
-              <button
-                type="button"
-                onClick={handleFileAttachment}
-                aria-label="Attach file"
-                className="p-2 text-[#896161] hover:text-primary hover:bg-[#f0eaea] rounded-lg transition-colors"
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
-                  attach_file
-                </span>
-              </button>
+            <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1 }}>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -162,28 +227,63 @@ const ChatWindow: React.FC = () => {
                 className="hidden"
                 aria-hidden="true"
               />
-              <textarea
-                ref={textareaRef}
+              <Tooltip title="Attach file">
+                <IconButton
+                  onClick={handleFileAttachment}
+                  sx={{ color: '#896161' }}
+                  size="medium"
+                >
+                  <AttachFileIcon />
+                </IconButton>
+              </Tooltip>
+              <TextField
+                fullWidth
+                multiline
+                maxRows={4}
                 value={inputValue}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                className="flex-1 bg-transparent border-none p-2.5 text-[#181111] placeholder:text-[#896161]/70 focus:ring-0 focus:outline-none resize-none max-h-32 min-h-[44px]"
-                placeholder="Type your question here..."
-                rows={1}
+                placeholder={language === 'EN' ? 'Type your question here...' : 'Sorunuzu buraya yazın...'}
                 disabled={isLoading}
-                aria-label="Message input"
+                variant="outlined"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: '#f8f6f6',
+                    borderRadius: '12px',
+                    '&:hover': {
+                      backgroundColor: '#fff',
+                    },
+                    '&.Mui-focused': {
+                      backgroundColor: '#fff',
+                      '& fieldset': {
+                        borderColor: '#d41111',
+                      },
+                    },
+                  },
+                }}
               />
-              <button
-                type="submit"
-                disabled={!inputValue.trim() || isLoading}
-                aria-label="Send message"
-                className="p-2 bg-primary text-white rounded-lg hover:bg-[#b00e0e] transition-colors shadow-sm flex items-center justify-center h-10 w-10 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
-                  send
+              <Tooltip title="Send message">
+                <span>
+                  <IconButton
+                    type="submit"
+                    disabled={!inputValue.trim() || isLoading}
+                    sx={{
+                      backgroundColor: '#d41111',
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: '#b00e0e',
+                      },
+                      '&.Mui-disabled': {
+                        backgroundColor: '#d4111150',
+                        color: 'white',
+                      },
+                    }}
+                  >
+                    {isLoading ? <CircularProgress size={20} sx={{ color: 'white' }} /> : <SendIcon />}
+                  </IconButton>
                 </span>
-              </button>
-            </div>
+              </Tooltip>
+            </Box>
           </form>
           <p className="text-center text-[11px] text-[#896161]/60 mt-2">
             NEU Virtual Assistant can make mistakes. Verify important information with

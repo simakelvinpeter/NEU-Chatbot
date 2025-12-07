@@ -9,6 +9,7 @@ export interface Message {
 export interface ChatRequest {
   message: string;
   session_id?: string;
+  language?: string;
 }
 
 export interface ChatResponse {
