@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
+import TypingIndicator from './TypingIndicator';
 import { sendMessage } from '../utils/api';
 import type { Message } from '../types';
 import { TextField, IconButton, CircularProgress, Chip, Box, Tooltip } from '@mui/material';
@@ -24,6 +25,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const [sessionId, setSessionId] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -80,14 +82,15 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
     setMessages([newInitialMessage]);
   }, [language]);
 
-  const handleSendMessage = async (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent, customMessage?: string) => {
     e.preventDefault();
 
-    if (!inputValue.trim() || isLoading) return;
+    const messageToSend = customMessage || inputValue;
+    if (!messageToSend.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: inputValue,
+      content: messageToSend,
       sender: 'user',
       timestamp: new Date(),
     };
@@ -95,13 +98,24 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
     setMessages((prev) => [...prev, userMessage]);
     setInputValue('');
     setIsLoading(true);
+    setIsTyping(true);
+
+    // Simulate realistic typing delay (500-1500ms)
+    const typingDelay = Math.random() * 1000 + 500;
 
     try {
-      const response = await sendMessage(inputValue, sessionId, language);
+      // Show typing indicator for a brief moment
+      await new Promise(resolve => setTimeout(resolve, Math.min(typingDelay, 800)));
+      
+      const response = await sendMessage(messageToSend, sessionId, language);
 
       if (response.session_id) {
         setSessionId(response.session_id);
       }
+
+      // Keep typing indicator a bit longer for better UX
+      await new Promise(resolve => setTimeout(resolve, 400));
+      setIsTyping(false);
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -112,6 +126,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
 
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
+      setIsTyping(false);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: 'Sorry, I encountered an error. Please try again.',
@@ -124,6 +139,21 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
       setIsLoading(false);
     }
   };
+
+  // Handle follow-up questions from response buttons
+  const handleFollowUpQuery = (query: string) => {
+    setInputValue(query);
+    const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+    handleSendMessage(fakeEvent, query);
+  };
+
+  // Make handleFollowUpQuery available globally for button clicks
+  useEffect(() => {
+    (window as any).sendFollowUpQuery = handleFollowUpQuery;
+    return () => {
+      delete (window as any).sendFollowUpQuery;
+    };
+  }, [sessionId, language]);
 
   const handleFileAttachment = () => {
     fileInputRef.current?.click();
@@ -174,13 +204,18 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
               <Chip
                 key={action}
                 label={action}
-                onClick={() => setInputValue(action)}
+                onClick={() => {
+                  const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+                  handleSendMessage(fakeEvent, action);
+                }}
                 clickable
                 sx={{
                   backgroundColor: '#f4f0f0',
                   '&:hover': {
                     backgroundColor: '#ebe7e7',
+                    transform: 'scale(1.05)',
                   },
+                  transition: 'all 0.2s',
                   fontSize: '0.8rem',
                   fontWeight: 500,
                 }}
@@ -192,6 +227,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
         {messages.map((message) => (
           <MessageBubble key={message.id} message={message} />
         ))}
+        
+        {isTyping && <TypingIndicator />}
+        
         {isLoading && (
           <div className="flex items-end gap-3 max-w-[85%]">
             <div
@@ -242,10 +280,12 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
                 maxRows={4}
                 value={inputValue}
                 onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
                 placeholder={language === 'EN' ? 'Type your question here...' : 'Sorunuzu buraya yazın...'}
                 disabled={isLoading}
                 variant="outlined"
+                inputProps={{
+                  onKeyDown: handleKeyDown,
+                }}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     backgroundColor: '#f8f6f6',

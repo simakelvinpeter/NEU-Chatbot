@@ -13,22 +13,126 @@ class BotLogic:
     
     def _load_locations(self) -> Dict[str, Dict[str, float]]:
         return {
-            "neu_main": {"lat": 35.226735, "lng": 33.326385, "name": "Near East University Main Campus"},
-            "rectorate": {"lat": 35.2271, "lng": 33.3267, "name": "Rectorate Building (Administration)"},
-            "international_office": {"lat": 35.2271, "lng": 33.3267, "name": "International Office - Rectorate Ground Floor"},
-            "student_affairs": {"lat": 35.2271, "lng": 33.3267, "name": "Student Affairs Office - Rectorate"},
-            "near_east_bank_main": {"lat": 35.2269, "lng": 33.3265, "name": "Near East Bank - Main Branch"},
-            "near_east_bank_dorms": {"lat": 35.2255, "lng": 33.3275, "name": "Near East Bank - Dormitory Branch"},
-            "cis_faculty": {"lat": 35.2268, "lng": 33.3270, "name": "Faculty of Computer and Information Systems"},
-            "engineering_faculty": {"lat": 35.2274, "lng": 33.3272, "name": "Faculty of Engineering"},
-            "medicine_faculty": {"lat": 35.2280, "lng": 33.3260, "name": "Faculty of Medicine"},
-            "law_faculty": {"lat": 35.2265, "lng": 33.3268, "name": "Faculty of Law"},
-            "architecture_faculty": {"lat": 35.2270, "lng": 33.3275, "name": "Faculty of Architecture"},
-            "grand_library": {"lat": 35.2272, "lng": 33.3268, "name": "Grand Library (Büyük Kütüphane)"},
-            "neu_hospital": {"lat": 35.2285, "lng": 33.3258, "name": "Near East University Hospital"},
-            "sports_complex": {"lat": 35.2260, "lng": 33.3280, "name": "Sports Complex"},
-            "olympic_pool": {"lat": 35.2261, "lng": 33.3281, "name": "Olympic Swimming Pool"},
-            "dormitories": {"lat": 35.2253, "lng": 33.3278, "name": "Student Dormitories Area"},
+            "neu_main": {
+                "lat": 35.226735, 
+                "lng": 33.326385, 
+                "name": "Near East University Main Campus",
+                "share_link": "https://maps.app.goo.gl/itWcEscDtg79itd27"
+            },
+            "rectorate": {
+                "lat": 35.2271, 
+                "lng": 33.3267, 
+                "name": "Rectorate Building (Administration)",
+                "share_link": ""
+            },
+            "international_office": {
+                "lat": 35.2271, 
+                "lng": 33.3267, 
+                "name": "International Office - Rectorate Ground Floor",
+                "share_link": ""
+            },
+            "student_affairs": {
+                "lat": 35.2271, 
+                "lng": 33.3267, 
+                "name": "Student Affairs Office - Rectorate",
+                "share_link": ""
+            },
+            "near_east_bank_main": {
+                "lat": 35.2269, 
+                "lng": 33.3265, 
+                "name": "Near East Bank - Main Branch",
+                "share_link": ""
+            },
+            "near_east_bank_dorms": {
+                "lat": 35.2255, 
+                "lng": 33.3275, 
+                "name": "Near East Bank - Dormitory Branch",
+                "share_link": ""
+            },
+            "cis_faculty": {
+                "lat": 35.2268, 
+                "lng": 33.3270, 
+                "name": "Faculty of Computer and Information Systems",
+                "share_link": ""
+            },
+            "engineering_faculty": {
+                "lat": 35.2274, 
+                "lng": 33.3272, 
+                "name": "Faculty of Engineering",
+                "share_link": ""
+            },
+            "medicine_faculty": {
+                "lat": 35.2280, 
+                "lng": 33.3260, 
+                "name": "Faculty of Medicine (TIP)",
+                "share_link": "https://maps.app.goo.gl/SkmWGXdkfsv6A8PW9"
+            },
+            "law_faculty": {
+                "lat": 35.2265, 
+                "lng": 33.3268, 
+                "name": "Faculty of Law",
+                "share_link": ""
+            },
+            "architecture_faculty": {
+                "lat": 35.2270, 
+                "lng": 33.3275, 
+                "name": "Faculty of Architecture",
+                "share_link": ""
+            },
+            "health_sciences_faculty": {
+                "lat": 35.2273, 
+                "lng": 33.3264, 
+                "name": "Faculty of Health Sciences (Saglik Bilimleri)",
+                "share_link": "https://maps.app.goo.gl/AB2VRNV5xb4HjNTL8"
+            },
+            "pharmacy_faculty": {
+                "lat": 35.2275, 
+                "lng": 33.3269, 
+                "name": "Faculty of Pharmacy",
+                "share_link": "https://maps.app.goo.gl/qJqzFPTcdmoTZtDj9"
+            },
+            "grand_library": {
+                "lat": 35.2272, 
+                "lng": 33.3268, 
+                "name": "Grand Library (Büyük Kütüphane)",
+                "share_link": "https://maps.app.goo.gl/ogbEYWfhDra6WbF28"
+            },
+            "neu_hospital": {
+                "lat": 35.2285, 
+                "lng": 33.3258, 
+                "name": "Near East University Grand Hospital",
+                "share_link": "https://maps.app.goo.gl/sSWHALZPDFERokyT9"
+            },
+            "sports_complex": {
+                "lat": 35.2260, 
+                "lng": 33.3280, 
+                "name": "Sports Complex",
+                "share_link": ""
+            },
+            "sports_tower": {
+                "lat": 35.2258, 
+                "lng": 33.3282, 
+                "name": "Sports Tower",
+                "share_link": "https://maps.app.goo.gl/dK88dC1ybnKw6BoA8"
+            },
+            "olympic_pool": {
+                "lat": 35.2261, 
+                "lng": 33.3281, 
+                "name": "Olympic Swimming Pool",
+                "share_link": ""
+            },
+            "dormitories": {
+                "lat": 35.2253, 
+                "lng": 33.3278, 
+                "name": "Student Dormitories Area",
+                "share_link": ""
+            },
+            "neu_mosque": {
+                "lat": 35.2269, 
+                "lng": 33.3271, 
+                "name": "NEU Mosque (Cami)",
+                "share_link": "https://maps.app.goo.gl/AbaMwvUt9JVHbumb7"
+            },
         }
     
     def _get_map_link(self, location_key: str) -> str:
@@ -38,13 +142,268 @@ class BotLogic:
         loc = self.locations[location_key]
         lat, lng = loc["lat"], loc["lng"]
         name = loc["name"]
+        share_link = loc.get("share_link", "")
         
-        if location_key == "neu_main":
-            maps_url = "https://www.google.com/maps/place/Near+East+University/"
+        # Use share link if available, otherwise construct URL
+        if share_link:
+            maps_url = share_link
+            # Extract place_id or use coordinates for embed
+            embed_url = f"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3265!2d{lng}!3d{lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1sen!2s!4v1702000000000!5m2!1sen!2s"
+        elif location_key == "neu_main":
+            maps_url = "https://maps.app.goo.gl/itWcEscDtg79itd27"
+            embed_url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3265.0644944447656!2d33.32418837637935!3d35.22673557270906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14de4f6cf9b33f8f%3A0xb6dd16516c3eb1b9!2sNear%20East%20University!5e0!3m2!1sen!2s!4v1702000000000!5m2!1sen!2s"
         else:
             maps_url = f"https://www.google.com/maps?q={lat},{lng}"
+            embed_url = f"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3265!2d{lng}!3d{lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1sen!2s!4v1702000000000!5m2!1sen!2s"
         
-        return f"🗺️ <strong><a href='{maps_url}' target='_blank'>📌 View {name} on Google Maps (Exact Location)</a></strong>"
+        # Create directions URL (from current location)
+        directions_url = f"https://www.google.com/maps/dir/?api=1&destination={lat},{lng}&travelmode=walking"
+        
+        # Return enhanced map response with embedded iframe and directions
+        return f"""
+        <div class="map-container" style="margin: 15px 0; animation: slideIn 0.3s ease-out;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px; border-radius: 12px 12px 0 0; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="margin: 0; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    <svg style="width: 20px; height: 20px; fill: white;" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    {name}
+                </h3>
+            </div>
+            <div style="border: 2px solid #667eea; border-top: none; overflow: hidden;">
+                <iframe 
+                    src="{embed_url}" 
+                    width="100%" 
+                    height="300" 
+                    style="border:0; display: block;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <a href="{directions_url}" target="_blank" style="
+                    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); 
+                    color: white; 
+                    padding: 12px; 
+                    border-radius: 10px; 
+                    text-align: center; 
+                    text-decoration: none; 
+                    font-weight: 600;
+                    font-size: 14px;
+                    box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+                    transition: transform 0.2s, box-shadow 0.2s;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(255,107,107,0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(255,107,107,0.3)';">
+                    <svg style="width: 18px; height: 18px; fill: white;" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+                    Get Directions from My Location
+                </a>
+                <a href="{maps_url}" target="_blank" style="
+                    background: #667eea; 
+                    color: white; 
+                    padding: 12px; 
+                    border-radius: 10px; 
+                    text-align: center; 
+                    text-decoration: none; 
+                    font-weight: 600;
+                    font-size: 14px;
+                    box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+                    transition: transform 0.2s, box-shadow 0.2s;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(102,126,234,0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(102,126,234,0.3)';">
+                    <svg style="width: 18px; height: 18px; fill: white;" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                    View on Map
+                </a>
+            </div>
+            <div style="margin-top: 10px;">
+                <a href="https://maps.apple.com/?daddr={lat},{lng}" target="_blank" style="
+                    display: flex;
+                    background: #34c759; 
+                    color: white; 
+                    padding: 10px; 
+                    border-radius: 8px; 
+                    text-align: center; 
+                    text-decoration: none; 
+                    font-weight: 500;
+                    font-size: 13px;
+                    box-shadow: 0 2px 8px rgba(52,199,89,0.3);
+                    transition: all 0.2s;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(52,199,89,0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(52,199,89,0.3)';">
+                    <svg style="width: 16px; height: 16px; fill: white;" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    Open in Apple Maps
+                </a>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%); border-radius: 10px; font-size: 13px; border-left: 4px solid #667eea;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                    <svg style="width: 16px; height: 16px; fill: #667eea;" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <strong style="color: #667eea;">Location Details</strong>
+                </div>
+                <div style="color: #555; line-height: 1.6;">
+                    <strong>Coordinates:</strong> {lat}, {lng}<br>
+                    <strong>Navigation:</strong> Click "Get Directions" for turn-by-turn guidance<br>
+                    <strong>Tip:</strong> Allow location access for best navigation experience
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes slideIn {{
+                from {{ opacity: 0; transform: translateY(20px); }}
+                to {{ opacity: 1; transform: translateY(0); }}
+            }}
+        </style>
+        """
+    
+    def _format_response(self, content: str, response_type: str = "info", title: str = None, follow_up_suggestions: List[str] = None) -> str:
+        """Format responses with enhanced visual structure"""
+        
+        # Response type configurations with SVG icons
+        type_config = {
+            "info": {"icon": '<svg style="width: 20px; height: 20px; fill: #667eea;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>', "color": "#667eea", "bg": "#f0f4ff"},
+            "success": {"icon": '<svg style="width: 20px; height: 20px; fill: #34c759;" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>', "color": "#34c759", "bg": "#e8f8ed"},
+            "warning": {"icon": '<svg style="width: 20px; height: 20px; fill: #ff9500;" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>', "color": "#ff9500", "bg": "#fff4e6"},
+            "tip": {"icon": '<svg style="width: 20px; height: 20px; fill: #5856d6;" viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>', "color": "#5856d6", "bg": "#f3f2ff"},
+            "location": {"icon": '<svg style="width: 20px; height: 20px; fill: #ff2d55;" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>', "color": "#ff2d55", "bg": "#ffe6ed"},
+            "academic": {"icon": '<svg style="width: 20px; height: 20px; fill: #007aff;" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>', "color": "#007aff", "bg": "#e6f2ff"}
+        }
+        
+        config = type_config.get(response_type, type_config["info"])
+        
+        # Build response HTML
+        response_html = f"""
+        <div style="border-left: 4px solid {config['color']}; padding: 15px; margin: 10px 0; background: {config['bg']}; border-radius: 8px;">
+        """
+        
+        if title:
+            response_html += f"""
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                {config['icon']}
+                <strong style="font-size: 16px; color: {config['color']};">{title}</strong>
+            </div>
+            """
+        
+        response_html += f"""
+            <div style="color: #333; line-height: 1.6;">
+                {content}
+            </div>
+        """
+        
+        # Add follow-up suggestions
+        if follow_up_suggestions:
+            response_html += """
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc;">
+                <div style="font-size: 14px; color: #666; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                    <svg style="width: 16px; height: 16px; fill: #666;" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                    <strong>You might also want to ask:</strong>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            """
+            for suggestion in follow_up_suggestions:
+                response_html += f"""
+                <button class="follow-up-btn" onclick="sendFollowUpQuery('{suggestion}')" style="
+                    background: white;
+                    border: 1px solid {config['color']};
+                    color: {config['color']};
+                    padding: 6px 12px;
+                    border-radius: 16px;
+                    font-size: 13px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    white-space: nowrap;
+                ">
+                    {suggestion}
+                </button>
+                """
+            response_html += """
+                </div>
+            </div>
+            """
+        
+        response_html += "</div>"
+        return response_html
+    
+    def _create_info_card(self, title: str, items: Dict[str, str], icon: str = None) -> str:
+        """Create an information card with structured data"""
+        # Default SVG icon for info card
+        if icon is None:
+            icon = '<svg style="width: 24px; height: 24px; fill: #667eea;" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>'
+        
+        card_html = f"""
+        <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 16px; margin: 10px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0;">
+                {icon}
+                <h3 style="margin: 0; font-size: 18px; color: #333;">{title}</h3>
+            </div>
+            <div style="display: grid; gap: 10px;">
+        """
+        
+        for key, value in items.items():
+            card_html += f"""
+                <div style="display: flex; align-items: start; gap: 8px;">
+                    <span style="color: #667eea; font-weight: bold; min-width: 20px;">▪</span>
+                    <div style="flex: 1;">
+                        <strong style="color: #555;">{key}:</strong>
+                        <span style="color: #666; margin-left: 5px;">{value}</span>
+                    </div>
+                </div>
+            """
+        
+        card_html += """
+            </div>
+        </div>
+        """
+        return card_html
+    
+    def _create_step_guide(self, title: str, steps: List[Dict[str, str]], icon: str = None) -> str:
+        """Create a step-by-step guide"""
+        # Default SVG icon for step guide
+        if icon is None:
+            icon = '<svg style="width: 24px; height: 24px; fill: white;" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
+        
+        guide_html = f"""
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 16px; border-radius: 12px; color: white; margin: 10px 0;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                {icon}
+                <h3 style="margin: 0; font-size: 18px;">{title}</h3>
+            </div>
+        </div>
+        <div style="background: white; border: 2px solid #667eea; border-top: none; border-radius: 0 0 12px 12px; padding: 16px; margin-top: -10px;">
+        """
+        
+        for i, step in enumerate(steps, 1):
+            guide_html += f"""
+            <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: start;">
+                <div style="
+                    min-width: 32px;
+                    height: 32px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: 16px;
+                ">
+                    {i}
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; color: #333; margin-bottom: 4px;">{step['title']}</div>
+                    <div style="color: #666; font-size: 14px;">{step['description']}</div>
+                </div>
+            </div>
+            """
+        
+        guide_html += """
+        </div>
+        """
+        return guide_html
 
     def _load_faq(self) -> Dict[str, str]:
         return {
@@ -96,18 +455,18 @@ class BotLogic:
             "how to transfer credits": "Submit your transcript and course descriptions to the faculty secretary for evaluation and approval.",
             "how many faculties": "NEU has <strong>16 faculties</strong> offering diverse programs: Engineering, Medicine, Dentistry, Pharmacy, Law, Architecture, Fine Arts, Economics & Administrative Sciences, Arts & Sciences, Communication, Education, Maritime Studies, Nursing, Health Sciences, Veterinary Medicine, and Aviation & Space Sciences.",
             "best faculties": "NEU's top-ranked faculties include:<br>• <strong>Faculty of Engineering</strong> - Computer Science, Civil, Electrical Engineering<br>• <strong>Faculty of Medicine</strong> - Highly acclaimed medical program<br>• <strong>Faculty of Architecture</strong> - Award-winning design programs<br>• <strong>Faculty of Business & Economics</strong> - Internationally accredited<br>• <strong>Faculty of Law</strong> - Comprehensive legal education",
-            "dean of cis": "👩‍🏫 Prof. Dr. Nadire Cavus<br>Dean, Faculty of Computer and Information Systems<br><br><strong>Expertise:</strong><br>Prof. Dr. Nadire Cavus is a renowned expert in educational technology, e-learning systems, and mobile learning platforms.<br><br><strong>Contact Information:</strong><br>📧 nadire.cavus@neu.edu.tr<br>🏫 CIS Faculty Building, NEU Campus<br><br>🔗 <a href='https://cis.neu.edu.tr/' target='_blank'>Visit CIS Faculty Website</a>",
-            "who is nadire cavus": "👩‍🏫 Prof. Dr. Nadire Cavus<br>Dean, Faculty of Computer and Information Systems<br><br><strong>Professional Background:</strong><br>Prof. Dr. Nadire Cavus is a distinguished academic leader and researcher at Near East University. She specializes in:<br>• Educational Technology<br>• E-Learning Systems<br>• Mobile Learning<br>• Computer Science Education<br><br><strong>Contact Information:</strong><br>📧 nadire.cavus@neu.edu.tr<br>🏢 CIS Faculty Building, NEU Campus<br><br>🔗 <a href='https://cis.neu.edu.tr/' target='_blank'>View Full Academic Profile</a>",
-            "head of cis faculty": "👩‍🏫 CIS Faculty Leadership<br><strong>Dean:</strong> Prof. Dr. Nadire Cavus<br><br>Prof. Dr. Nadire Cavus leads the Faculty of Computer and Information Systems and oversees all academic programs, research initiatives, and faculty operations.<br><br><strong>Contact:</strong><br>📧 nadire.cavus@neu.edu.tr<br>🏫 CIS Faculty Building<br><br>🔗 <a href='https://cis.neu.edu.tr/' target='_blank'>CIS Faculty Website</a>",
-            "cis dean": "👩‍🏫 Prof. Dr. Nadire Cavus<br>Dean, Computer and Information Systems Faculty<br><br><strong>Contact Information:</strong><br>📧 nadire.cavus@neu.edu.tr<br>🏫 CIS Faculty Building<br><br>🔗 <a href='https://cis.neu.edu.tr/' target='_blank'>Faculty Website</a>",
-            "faculty deans": "Each of NEU's 16 faculties has a dean. Some key deans include:<br><br>• <strong>CIS Faculty:</strong> Prof. Dr. Nadire Cavus<br>• <strong>Engineering Faculty:</strong> Contact the faculty office<br>• <strong>Medicine Faculty:</strong> Contact the faculty office<br>• <strong>Law Faculty:</strong> Contact the faculty office<br><br>For complete dean contact information, visit: <a href='https://neu.edu.tr/akademik/fakulteler/' target='_blank'>NEU Faculties Page</a>",
-            "how to contact faculty dean": "Each faculty dean has an office in their respective faculty building. You can:<br>1. Email them directly (format: firstname.lastname@neu.edu.tr)<br>2. Visit the faculty secretary to schedule an appointment<br>3. Check the faculty website for specific contact details<br><br>Example: CIS Dean Prof. Dr. Nadire Cavus - nadire.cavus@neu.edu.tr",
-            "faculty leadership": "NEU's faculties are led by experienced deans and academic leadership teams. Each faculty has:<br>• <strong>Dean</strong> - Overall faculty head<br>• <strong>Vice Deans</strong> - Support the dean<br>• <strong>Department Heads</strong> - Lead individual departments<br><br>Visit <a href='https://neu.edu.tr/akademik/fakulteler/' target='_blank'>NEU Faculties</a> for complete leadership information.",
             "where is cis faculty": f"📍 <strong>Faculty of Computer and Information Systems (CIS)</strong><br><br>The CIS Faculty building is located in the academic zone of the main NEU campus.<br><br>{self._get_map_link('cis_faculty')}<br><br>🚶 <strong>Directions:</strong> From the main entrance, follow signs to the academic buildings zone. Look for 'CIS' or 'Bilgisayar ve Bilişim Sistemleri Fakültesi' signs.<br><br>💡 You can also ask security or students for 'CIS Faculty' directions.",
             "cis faculty location": f"📍 <strong>CIS Faculty Building Location</strong><br><br>{self._get_map_link('cis_faculty')}<br><br>The CIS Faculty is on the main NEU campus in the academic zone. The faculty office and Dean's office (Prof. Dr. Nadire Cavus) are inside the CIS building.<br><br>🚶 From main entrance → Follow academic buildings signs → Look for 'CIS Faculty'",
             "engineering faculty location": f"📍 <strong>Faculty of Engineering</strong><br><br>The Faculty of Engineering is one of the largest buildings on campus, located in the central academic area.<br><br>{self._get_map_link('engineering_faculty')}<br><br>🚶 Look for the Engineering Faculty signs or ask any student for directions to 'Mühendislik Fakültesi'.",
             "medicine faculty location": f"📍 <strong>Faculty of Medicine</strong><br><br>The Faculty of Medicine is located near the NEU Hospital. It's clearly marked and easy to find.<br><br>{self._get_map_link('medicine_faculty')}<br><br>🏥 Located adjacent to NEU Hospital building.",
             "where is law faculty": f"📍 <strong>Faculty of Law</strong><br><br>{self._get_map_link('law_faculty')}<br><br>The Faculty of Law building is in the academic zone of the main campus. Check the map link above for precise directions.",
+            "where is pharmacy faculty": f"📍 <strong>Faculty of Pharmacy</strong><br><br>{self._get_map_link('pharmacy_faculty')}<br><br>🧪 The Pharmacy Faculty is located in the health sciences area of campus. Click 'Get Directions' for turn-by-turn navigation from your current location.",
+            "pharmacy faculty location": f"📍 <strong>Faculty of Pharmacy Location</strong><br><br>{self._get_map_link('pharmacy_faculty')}<br><br>💊 Easy to find in the health sciences zone. Use the map above for precise directions.",
+            "where is health sciences faculty": f"📍 <strong>Faculty of Health Sciences (Sağlık Bilimleri)</strong><br><br>{self._get_map_link('health_sciences_faculty')}<br><br>🏥 Located near the Grand Hospital. Click 'Get Directions' to navigate from your location.",
+            "where is grand hospital": f"📍 <strong>NEU Grand Hospital</strong><br><br>{self._get_map_link('neu_hospital')}<br><br>🏥 NEU's state-of-the-art hospital is one of the largest in Cyprus. Open 24/7 for emergencies.",
+            "where is grand library": f"📍 <strong>Grand Library (Büyük Kütüphane)</strong><br><br>{self._get_map_link('grand_library')}<br><br>📚 Open 24/7 during semester. One of the largest university libraries in the region with millions of resources.",
+            "where is mosque": f"📍 <strong>NEU Mosque (Cami)</strong><br><br>{self._get_map_link('neu_mosque')}<br><br>🕌 Beautiful mosque on campus for prayer and religious activities. Open daily for all five prayers.",
+            "where is sports tower": f"📍 <strong>Sports Tower</strong><br><br>{self._get_map_link('sports_tower')}<br><br>🏋️ Multi-story sports facility with gym equipment, courts, and training areas. Modern facility for all students.",
             "faculty building directions": f"All faculty buildings are located on the main NEU campus.<br><br>{self._get_map_link('neu_main')}<br><br>Or ask security/students for specific faculty locations.",
             "where is north cyprus": "North Cyprus is the Turkish-speaking northern part of the island of Cyprus, located in the Eastern Mediterranean.",
             "difference between north and south cyprus": "North Cyprus (TRNC) is Turkish-administered and uses Turkish Lira. South Cyprus uses the Euro and is under EU administration.",
@@ -271,45 +630,60 @@ class BotLogic:
         try:
             query_lower = query.lower()
 
-            if any(word in query_lower for word in ['admission', 'apply', 'application', 'requirements', 'entry']):
-                return self._scrape_admissions_page()
-            
-            if any(word in query_lower for word in ['dean', 'faculty', 'head', 'professor', 'department']):
-                return self._scrape_faculty_info()
-            
-            if any(word in query_lower for word in ['tuition', 'fee', 'cost', 'payment', 'price']):
-                return self._scrape_tuition_info()
-            
-            if any(word in query_lower for word in ['scholarship', 'discount', 'financial aid', 'bursary']):
-                return self._scrape_scholarship_info()
-            
-            if any(word in query_lower for word in ['dormitory', 'dorm', 'accommodation', 'housing', 'residence']):
-                return self._scrape_accommodation_info()
-            
-            if any(word in query_lower for word in ['international', 'foreign', 'visa', 'residence permit']):
-                return self._scrape_international_info()
-
-            neu_pages = {
-                'about': 'https://neu.edu.tr/en/about-us/',
-                'academics': 'https://neu.edu.tr/en/academic/',
-                'faculties': 'https://neu.edu.tr/en/academic/faculties/',
-                'student': 'https://neu.edu.tr/en/student/',
-                'campus': 'https://neu.edu.tr/en/campus-life/',
+            # Comprehensive NEU page mappings for direct scraping
+            neu_pages_map = {
+                # Academic & Education
+                'library': ('https://neu.edu.tr/en/academic/library/', ['library', 'books', 'resources', 'study', 'kütüphane', 'kutuphan']),
+                'ects': ('https://neu.edu.tr/en/academic/ects/', ['ects', 'credit', 'transfer', 'european credit']),
+                'calendar': ('https://neu.edu.tr/en/academic/academic-calendar/', ['calendar', 'semester', 'schedule', 'dates', 'takvim']),
+                'regulations': ('https://neu.edu.tr/en/academic/regulations/', ['regulation', 'rules', 'policy', 'policies', 'yönetmelik']),
+                'faculties': ('https://neu.edu.tr/en/academic/faculties/', ['faculty', 'faculties', 'fakülte']),
+                'colleges': ('https://neu.edu.tr/en/academic/colleges/', ['college', 'colleges', 'yüksekokul']),
+                'vocational': ('https://neu.edu.tr/en/academic/vocational-schools/', ['vocational', 'meslek yüksekokulu', 'myo']),
+                'graduate': ('https://neu.edu.tr/en/academic/graduate-education/', ['graduate', 'master', 'phd', 'doctorate', 'postgraduate', 'lisansüstü']),
+                'preparatory': ('https://neu.edu.tr/en/academic/preparatory-school/', ['preparatory', 'prep', 'hazırlık', 'english preparatory']),
+                'distance': ('https://neu.edu.tr/en/academic/distance-education/', ['distance education', 'online', 'uzaktan eğitim']),
+                
+                # Student Services
+                'admission': ('https://neu.edu.tr/en/prospective-students/admission-requirements/', ['admission', 'apply', 'application', 'requirements', 'entry', 'başvuru']),
+                'tuition': ('https://neu.edu.tr/en/prospective-students/tuition-fees/', ['tuition', 'fee', 'cost', 'payment', 'price', 'ücret']),
+                'scholarship': ('https://neu.edu.tr/en/prospective-students/scholarships/', ['scholarship', 'discount', 'financial aid', 'bursary', 'burs']),
+                'accommodation': ('https://neu.edu.tr/en/student/accommodation/', ['accommodation', 'dormitory', 'dorm', 'housing', 'residence', 'yurt', 'konaklama']),
+                'international': ('https://neu.edu.tr/en/student/international-students/', ['international', 'foreign', 'visa', 'residence permit', 'uluslararası']),
+                'student_affairs': ('https://neu.edu.tr/en/student/student-affairs/', ['student affairs', 'öğrenci işleri', 'student services']),
+                
+                # About & Info
+                'about': ('https://neu.edu.tr/en/about-us/', ['about', 'history', 'founded', 'established', 'hakkında']),
+                'ranking': ('https://neu.edu.tr/en/about-us/world-ranking/', ['ranking', 'rank', 'ranked', 'position', 'world ranking', 'world rank', 'sıralama', 'neu rank']),
+                'accreditation': ('https://neu.edu.tr/en/academic/accreditations/', ['accreditation', 'accredited', 'recognition', 'akreditasyon']),
+                'research': ('https://neu.edu.tr/en/research/', ['research', 'publication', 'journal', 'araştırma']),
+                
+                # Campus Life
+                'campus': ('https://neu.edu.tr/en/campus-life/', ['campus', 'facility', 'facilities', 'kampüs']),
+                'sports': ('https://neu.edu.tr/en/campus-life/sports/', ['sport', 'sports', 'athletics', 'gym', 'fitness', 'spor']),
+                'clubs': ('https://neu.edu.tr/en/campus-life/student-clubs/', ['club', 'clubs', 'organization', 'society', 'kulüp']),
+                
+                # Career & Contact
+                'career': ('https://neu.edu.tr/en/career/', ['career', 'job', 'employment', 'work', 'kariyer']),
+                'contact': ('https://neu.edu.tr/en/contact/', ['contact', 'phone', 'email', 'address', 'iletişim']),
             }
 
-            page_to_scrape = None
-            if any(word in query_lower for word in ['about', 'history', 'founded', 'established']):
-                page_to_scrape = neu_pages['about']
-            elif any(word in query_lower for word in ['academic', 'program', 'course', 'degree']):
-                page_to_scrape = neu_pages['academics']
-            elif any(word in query_lower for word in ['student', 'registration']):
-                page_to_scrape = neu_pages['student']
-            elif any(word in query_lower for word in ['campus', 'facility', 'library']):
-                page_to_scrape = neu_pages['campus']
+            # Check for direct page matches
+            for page_key, (url, keywords) in neu_pages_map.items():
+                if any(keyword in query_lower for keyword in keywords):
+                    result = self._fetch_page_content(url, query)
+                    if result:
+                        return result
+                    # If scraping fails, return direct link
+                    return (
+                        f"For information about {page_key.replace('_', ' ')}, please visit:<br><br>"
+                        f"🔗 <strong><a href='{url}' target='_blank'>NEU {page_key.replace('_', ' ').title()} Page</a></strong><br><br>"
+                        f"This page contains comprehensive and up-to-date information about your query.<br><br>"
+                        f"📞 For more details: +90 392 680 20 00<br>"
+                        f"📧 Email: info@neu.edu.tr"
+                    )
 
-            if page_to_scrape:
-                return self._fetch_page_content(page_to_scrape, query)
-
+            # Try Google site search for anything else
             return self._google_site_search(query)
 
         except Exception as e:
@@ -433,30 +807,87 @@ class BotLogic:
     def _fetch_page_content(self, url: str, query: str) -> Optional[str]:
         try:
             headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
             }
-            response = requests.get(url, headers=headers, timeout=8)
+            response = requests.get(url, headers=headers, timeout=10)
 
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
-
-                # Extract main content paragraphs
-                paragraphs = []
-                for p in soup.find_all('p', limit=5):
-                    text = p.get_text(strip=True)
-                    if len(text) > 50:
-                        paragraphs.append(text)
-
-                if paragraphs:
-                    content = "<br><br>".join(paragraphs[:2])
-                    return (
-                        f"Here's information from the NEU website:<br><br>"
-                        f"{content}<br><br>"
-                        f"📖 <strong><a href='{url}' target='_blank'>Read more on NEU website</a></strong>"
-                    )
+                
+                # Try to extract page title
+                page_title = ""
+                title_tag = soup.find('title')
+                if title_tag:
+                    page_title = title_tag.get_text(strip=True).replace(' - Near East University', '').replace(' | NEU', '')
+                
+                # Try multiple content extraction strategies
+                content_found = []
+                
+                # Strategy 1: Look for main content div/article
+                main_content = soup.find(['article', 'main', 'div'], class_=lambda x: x and ('content' in x.lower() or 'main' in x.lower()))
+                if main_content:
+                    for p in main_content.find_all('p', limit=8):
+                        text = p.get_text(strip=True)
+                        if len(text) > 40 and text not in content_found:
+                            content_found.append(text)
+                
+                # Strategy 2: Look for headings and their following content
+                if len(content_found) < 3:
+                    for heading in soup.find_all(['h1', 'h2', 'h3'], limit=5):
+                        heading_text = heading.get_text(strip=True)
+                        if len(heading_text) > 10:
+                            content_found.append(f"<strong>{heading_text}</strong>")
+                            # Get next paragraph or list
+                            next_elem = heading.find_next(['p', 'ul', 'ol'])
+                            if next_elem:
+                                if next_elem.name in ['ul', 'ol']:
+                                    items = [f"• {li.get_text(strip=True)}" for li in next_elem.find_all('li')[:5]]
+                                    if items:
+                                        content_found.append("<br>".join(items))
+                                else:
+                                    text = next_elem.get_text(strip=True)
+                                    if len(text) > 40:
+                                        content_found.append(text)
+                
+                # Strategy 3: Extract all meaningful paragraphs
+                if len(content_found) < 2:
+                    for p in soup.find_all('p', limit=10):
+                        text = p.get_text(strip=True)
+                        if len(text) > 50 and text not in content_found:
+                            content_found.append(text)
+                
+                # Strategy 4: Look for lists
+                if len(content_found) < 2:
+                    for ul in soup.find_all(['ul', 'ol'], limit=3):
+                        items = [f"• {li.get_text(strip=True)}" for li in ul.find_all('li')[:8]]
+                        if items:
+                            content_found.append("<br>".join(items))
+                
+                # Strategy 5: Extract contact information
+                contact_info = []
+                for elem in soup.find_all(['a', 'span', 'p']):
+                    text = elem.get_text(strip=True)
+                    if '@neu.edu.tr' in text or '+90' in text or 'Tel:' in text or 'Phone:' in text or 'Email:' in text:
+                        if text not in contact_info and len(text) < 100:
+                            contact_info.append(text)
+                
+                if content_found:
+                    # Format the response nicely
+                    formatted_content = "<br><br>".join(content_found[:4])
+                    
+                    result = f"📚 <strong>{page_title or 'Information from NEU Website'}</strong><br><br>"
+                    result += formatted_content
+                    
+                    if contact_info:
+                        result += "<br><br>📞 <strong>Contact Information:</strong><br>"
+                        result += "<br>".join(contact_info[:3])
+                    
+                    result += f"<br><br>🔗 <strong><a href='{url}' target='_blank'>View Full Details on NEU Website</a></strong>"
+                    
+                    return result
 
             return None
-        except:
+        except Exception as e:
             return None
 
     def _google_site_search(self, query: str) -> Optional[str]:
@@ -511,14 +942,331 @@ class BotLogic:
                 return answer
             return "You're welcome! Is there anything else you'd like to know about Near East University?" if language == "EN" else "Rica ederim! Near East Üniversitesi hakkında başka bilgi almak ister misiniz?"
 
-        if "map" in msg_lower or "location" in msg_lower:
-            return "Here is the map location for Near East University: https://www.google.com/maps/place/Near+East+University/" if language == "EN" else "Near East Üniversitesi harita konumu: https://www.google.com/maps/place/Near+East+University/"
+        # PRIORITY WEB SCRAPING: Handle specific queries that need website info FIRST
+        # These should be checked BEFORE map/location queries to avoid false matches
+        
+        # Ranking queries - check early
+        if any(word in msg_lower for word in ["rank", "ranking", "ranked", "world rank", "world ranking", "position", "sıralama"]):
+            if not any(word in msg_lower for word in ["tournament", "event", "competition"]):
+                scraped_result = self._scrape_neu_website(message_cleaned)
+                if scraped_result:
+                    return scraped_result
+                return (
+                    "<svg style='width: 20px; height: 20px; fill: #ff9500; vertical-align: middle; margin-right: 8px;' viewBox='0 0 24 24'><path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2l-2.81 6.63L2 9.24l5.46 4.73L5.82 21z'/></svg> <strong>NEU World Ranking</strong><br><br>"
+                    "For current NEU rankings and recognition:<br><br>"
+                    "<svg style='width: 18px; height: 18px; fill: #007aff; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M3 9h4V5H3v4zm0 5h4v-4H3v4zm5 0h4v-4H8v4zm5 0h4v-4h-4v4zm-10 5h4v-4H3v4zm5 0h4v-4H8v4zm5 0h4v-4h-4v4zm5-14v4h4V5h-4zm0 9h4v-4h-4v4z'/></svg> <strong><a href='https://neu.edu.tr/en/about-us/world-ranking/' target='_blank'>View NEU World Rankings</a></strong><br><br>"
+                    "Near East University is recognized in various international university ranking systems including:<br>"
+                    "• QS World University Rankings<br>"
+                    "• Times Higher Education Rankings<br>"
+                    "• Regional Rankings<br><br>"
+                    "<svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z'/></svg> Contact: +90 392 680 20 00<br>"
+                    "<svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z'/></svg> Email: info@neu.edu.tr"
+                )
+        
+        # Accommodation queries - check early
+        if any(word in msg_lower for word in ["accommodation", "accommodations", "konaklama", "accomodation"]):
+            scraped_result = self._scrape_neu_website(message_cleaned)
+            if scraped_result:
+                return scraped_result
+            return (
+                "<svg style='width: 20px; height: 20px; fill: #34c759; vertical-align: middle; margin-right: 8px;' viewBox='0 0 24 24'><path d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/></svg> <strong>Accommodation Information</strong><br><br>"
+                "For dormitory and housing options at NEU:<br><br>"
+                "<svg style='width: 18px; height: 18px; fill: #007aff; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/></svg> <strong><a href='https://neu.edu.tr/en/student/accommodation/' target='_blank'>View Accommodation Options</a></strong><br><br>"
+                "NEU offers various accommodation options:<br>"
+                "• On-campus dormitories<br>"
+                "• Different room types (single, double, triple)<br>"
+                "• All utilities included<br>"
+                "• 24/7 security<br><br>"
+                "<svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z'/></svg> Contact: +90 392 680 20 00<br>"
+                "<svg style='width: 18px; height: 18px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> Email: accommodation@neu.edu.tr"
+            )
+        
+        # Calendar queries - exclude if asking about events/tournaments
+        if (any(word in msg_lower for word in ["calendar", "takvim", "semester dates", "academic calendar"]) or 
+            ("schedule" in msg_lower and not any(word in msg_lower for word in ["tournament", "event", "competition"]))):
+            # Exclude if it's about events
+            if not any(word in msg_lower for word in ["event", "tournament", "competition", "turnuva", "etkinlik"]):
+                scraped_result = self._scrape_neu_website(message_cleaned)
+                if scraped_result:
+                    return scraped_result
+                return (
+                    "<svg style='width: 20px; height: 20px; fill: #ff9500; vertical-align: middle; margin-right: 8px;' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z'/></svg> <strong>Academic Calendar Information</strong><br><br>"
+                    "For current semester dates, holidays, and academic schedule:<br><br>"
+                    "<svg style='width: 18px; height: 18px; fill: #007aff; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M3 9h4V5H3v4zm0 5h4v-4H3v4zm5 0h4v-4H8v4zm5 0h4v-4h-4v4zm-10 5h4v-4H3v4zm5 0h4v-4H8v4zm5 0h4v-4h-4v4zm5-14v4h4V5h-4zm0 9h4v-4h-4v4z'/></svg> <strong><a href='https://neu.edu.tr/en/academic/academic-calendar/' target='_blank'>View Academic Calendar</a></strong><br><br>"
+                    "This includes:<br>"
+                    "• Semester start and end dates<br>"
+                    "• Registration periods<br>"
+                    "• Exam schedules<br>"
+                    "• Public holidays<br>"
+                    "• Important academic deadlines<br><br>"
+                    "<svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z'/></svg> Contact: +90 392 680 20 00"
+                )
+        
+        # Events and tournaments - exclude if asking about location
+        if any(word in msg_lower for word in ["tournament", "event", "competition", "turnuva", "etkinlik"]):
+            # Exclude if asking for location of event
+            if not any(phrase in msg_lower for phrase in ["where is the event", "event location", "where is the tournament", "tournament location"]):
+                scraped_result = self._scrape_neu_website(message_cleaned)
+                if scraped_result:
+                    return scraped_result
+                return (
+                    "<svg style='width: 20px; height: 20px; fill: #ff9500; vertical-align: middle; margin-right: 8px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> <strong>Events & Tournaments</strong><br><br>"
+                    "For current events, tournaments, and activities at NEU:<br><br>"
+                    "• <a href='https://neu.edu.tr/en/announcements/' target='_blank'>NEU Announcements</a><br>"
+                    "• <a href='https://neu.edu.tr/en/events/' target='_blank'>NEU Events Calendar</a><br>"
+                    "• <a href='https://neu.edu.tr/en/campus-life/sports/' target='_blank'>Sports & Activities</a><br><br>"
+                    "<svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z'/></svg> Contact: Department of Health, Culture and Sports<br>"
+                    "<svg style='width: 18px; height: 18px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> Email: info@neu.edu.tr"
+                )
 
+        # Priority handling for dean queries - ALWAYS scrape website for accurate info
+        # Exclude if query is about events/tournaments (like "inter faculty tournament")
+        if (any(word in msg_lower for word in ["dean of", "dekan", "faculty dean", "head of faculty", "faculty head"]) and 
+            not any(word in msg_lower for word in ["tournament", "event", "competition", "turnuva", "etkinlik", "inter faculty"])):
+            # Check if asking about specific faculty
+            faculty_pages = {
+                "medicine": "https://neu.edu.tr/en/academic/faculties/faculty-of-medicine/",
+                "pharmacy": "https://neu.edu.tr/en/academic/faculties/faculty-of-pharmacy/",
+                "health sciences": "https://neu.edu.tr/en/academic/faculties/faculty-of-health-sciences/",
+                "engineering": "https://neu.edu.tr/en/academic/faculties/faculty-of-engineering/",
+                "law": "https://neu.edu.tr/en/academic/faculties/faculty-of-law/",
+                "architecture": "https://neu.edu.tr/en/academic/faculties/faculty-of-architecture/",
+                "economics": "https://neu.edu.tr/en/academic/faculties/faculty-of-economics-and-administrative-sciences/",
+                "arts": "https://neu.edu.tr/en/academic/faculties/faculty-of-arts-and-sciences/",
+                "education": "https://neu.edu.tr/en/academic/faculties/ataturk-faculty-of-education/",
+                "communication": "https://neu.edu.tr/en/academic/faculties/faculty-of-communication/",
+                "dentistry": "https://neu.edu.tr/en/academic/faculties/faculty-of-dentistry/",
+                "veterinary": "https://neu.edu.tr/en/academic/faculties/faculty-of-veterinary-medicine/",
+                "tourism": "https://neu.edu.tr/en/academic/faculties/faculty-of-tourism/",
+                "maritime": "https://neu.edu.tr/en/academic/faculties/faculty-of-maritime/",
+            }
+            
+            # Try to find specific faculty page
+            for faculty_name, faculty_url in faculty_pages.items():
+                if faculty_name in msg_lower:
+                    scraped_result = self._fetch_page_content(faculty_url, message_cleaned)
+                    if scraped_result:
+                        return scraped_result
+                    # If scraping fails, return link to faculty page
+                    return (
+                        f"For current dean information and faculty details, please visit:<br><br>"
+                        f"<svg style='width: 20px; height: 20px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> <strong><a href='{faculty_url}' target='_blank'>{faculty_name.title()} Faculty Page</a></strong><br><br>"
+                        f"You can find:<br>"
+                        f"• Current dean contact information<br>"
+                        f"• Department heads<br>"
+                        f"• Faculty office details<br>"
+                        f"• Academic staff directory<br><br>"
+                        f"<svg style='width: 18px; height: 18px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> For urgent inquiries: info@neu.edu.tr"
+                    )
+            
+            # General dean query - return all faculties page
+            return (
+                "<svg style='width: 20px; height: 20px; fill: #5856d6; vertical-align: middle; margin-right: 8px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/></svg> <strong>Faculty Deans & Leadership</strong><br><br>"
+                "For current and accurate information about all faculty deans, please visit:<br><br>"
+                "<svg style='width: 18px; height: 18px; fill: #ff9500; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z'/></svg> <strong><a href='https://neu.edu.tr/en/academic/faculties/' target='_blank'>View All Faculties & Their Deans</a></strong><br><br>"
+                "This page provides:<br>"
+                "• Complete list of all 16 faculties<br>"
+                "• Current dean names and contact information<br>"
+                "• Department heads and academic staff<br>"
+                "• Faculty office locations and hours<br><br>"
+                "<svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/></svg> <strong>Tip:</strong> You can ask about a specific faculty, for example:<br>"
+                "• 'Who is the dean of Medicine?'<br>"
+                "• 'Dean of Engineering faculty'<br>"
+                "• 'Pharmacy faculty dean contact'<br><br>"
+                "<svg style='width: 18px; height: 18px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> General inquiries: info@neu.edu.tr"
+            )
+
+        # Special handling for map/location queries with embedded map
+        # Only trigger if it's actually asking for a location/direction
+        # Exclude queries about events, tournaments, calendar, schedules
+        is_location_query = (
+            # Exclude calendar, event, tournament queries
+            not any(word in msg_lower for word in ["tournament", "event", "competition", "calendar", "schedule", "when is", "when does", "starting"]) and
+            (
+                any(word in msg_lower for word in ["where is", "where's", "location of", "how to get to", "how do i get to", "directions to", "nerede"]) or
+                ("map" in msg_lower and any(word in msg_lower for word in ["show", "campus", "building"])) or
+                (any(word in msg_lower for word in ["pharmacy faculty", "medicine faculty", "engineering faculty", "law faculty", "cis faculty", 
+                                                      "hospital", "library", "mosque", "bank", "dormitory"]) and 
+                 any(word in msg_lower for word in ["where", "location", "find"]))
+            )
+        )
+        
+        if is_location_query:
+            # Enhanced keyword matching for specific locations
+            location_keywords = {
+                "pharmacy": "pharmacy_faculty",
+                "eczane": "pharmacy_faculty",
+                "medicine": "medicine_faculty",
+                "tip": "medicine_faculty",
+                "medical": "medicine_faculty",
+                "health sciences": "health_sciences_faculty",
+                "saglik bilimleri": "health_sciences_faculty",
+                "hospital": "neu_hospital",
+                "grand hospital": "neu_hospital",
+                "hastane": "neu_hospital",
+                "library": "grand_library",
+                "kütüphane": "grand_library",
+                "kutuphan": "grand_library",
+                "mosque": "neu_mosque",
+                "cami": "neu_mosque",
+                "prayer": "neu_mosque",
+                "sports tower": "sports_tower",
+                "spor kulesi": "sports_tower",
+                "cis": "cis_faculty",
+                "computer": "cis_faculty",
+                "engineering": "engineering_faculty",
+                "muhendislik": "engineering_faculty",
+                "law": "law_faculty",
+                "hukuk": "law_faculty",
+                "architecture": "architecture_faculty",
+                "mimarlik": "architecture_faculty",
+                "bank": "near_east_bank_main",
+                "banka": "near_east_bank_main",
+                "dormitory": "dormitories",
+                "dormitories": "dormitories",
+                "yurt": "dormitories",
+                "dorm": "dormitories",
+                "sports": "sports_complex",
+                "spor": "sports_complex",
+                "pool": "olympic_pool",
+                "swimming": "olympic_pool",
+                "rectorate": "rectorate",
+                "rektörlük": "rectorate",
+                "administration": "rectorate",
+                "international office": "international_office",
+                "student affairs": "student_affairs",
+            }
+            
+            # Check for keyword matches
+            for keyword, loc_key in location_keywords.items():
+                if keyword in msg_lower:
+                    return self._get_map_link(loc_key)
+            
+            # Check for location name matches
+            for loc_key in self.locations.keys():
+                loc_name = self.locations[loc_key]["name"].lower()
+                if any(word in msg_lower for word in loc_name.split()):
+                    return self._get_map_link(loc_key)
+            
+            # Default to main campus map
+            return self._get_map_link("neu_main")
+        
+        # Special handling for registration with enhanced formatting
+        # Exclude if asking about course registration, events, or other unrelated topics
+        if (any(word in msg_lower for word in ["register", "registration", "enroll", "enrollment"]) and 
+            "course" not in msg_lower and
+            not any(word in msg_lower for word in ["event", "tournament", "competition"])):
+            steps = [
+                {
+                    "title": "Visit Uzebim Portal",
+                    "description": "Go to <a href='https://uzebim.neu.edu.tr/' target='_blank' style='color: #667eea;'>uzebim.neu.edu.tr</a> and log in with your credentials"
+                },
+                {
+                    "title": "Prepare Documents",
+                    "description": "Have your passport, high school diploma, transcript, acceptance letter, and payment receipt ready"
+                },
+                {
+                    "title": "Complete Registration Steps",
+                    "description": "Follow the on-screen instructions to complete each registration section"
+                },
+                {
+                    "title": "Get Help if Needed",
+                    "description": "Visit the International Office (Rectorate Building, Ground Floor) for assistance"
+                }
+            ]
+            
+            follow_ups = ["What documents do I need?", "International Office location", "Tuition fees"]
+            
+            guide = self._create_step_guide("<svg style='width: 20px; height: 20px; fill: #667eea; vertical-align: middle; margin-right: 8px;' viewBox='0 0 24 24'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-8-6z'/></svg> Student Registration Process", steps, "<svg style='width: 18px; height: 18px; fill: #5856d6;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/></svg>")
+            formatted = self._format_response(
+                guide,
+                response_type="academic",
+                title="How to Register at NEU",
+                follow_up_suggestions=follow_ups
+            )
+            return formatted
+        
+        # Special handling for tuition/fees
+        # Exclude if asking about events, tournaments, or other unrelated topics
+        if (any(word in msg_lower for word in ["tuition", "fee", "cost", "price"]) or
+            ("payment" in msg_lower and any(word in msg_lower for word in ["how to pay", "payment method", "pay tuition"]))) and \
+            not any(word in msg_lower for word in ["event", "tournament", "competition"]):
+            info_card = self._create_info_card(
+                "<svg style='width: 20px; height: 20px; fill: #34c759; vertical-align: middle; margin-right: 8px;' viewBox='0 0 24 24'><path d='M11.8 10.9c-2.27-.59-3-1.38-3-2.39 0-1.02.88-1.64 2.19-1.64 1.29 0 1.97.63 2.19 1.55h1.75c-.23-1.85-1.45-2.78-3.94-2.78-2.35 0-3.72 1.44-3.72 2.97 0 2.13 1.23 2.97 3.35 3.61 2.16.59 3.4 1.08 3.4 2.2 0 .98-.99 1.59-2.3 1.59s-2.42-.6-2.63-1.51H8.4c.21 1.62 1.38 2.77 3.6 2.77 2.3 0 3.72-1.44 3.72-2.8 0-2.06-1.12-2.65-3.84-3.37zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'/></svg> Payment Information",
+                {
+                    "Payment Methods": "Near East Bank, POS at International Office, Bank Transfer",
+                    "Payment Plans": "Full payment (with discount) or installment options available",
+                    "Bank Location": "Near East Bank on campus (next to Rectorate Building)",
+                    "Financial Office": "Check balances in Genius Portal under 'Financial' section"
+                },
+                "💰"
+            )
+            
+            follow_ups = ["Near East Bank location", "Scholarship options", "Payment deadline"]
+            
+            return self._format_response(
+                info_card + "<br>💡 <strong>Tip:</strong> Full payment often includes discounts. Ask the Financial Office for current rates!",
+                response_type="info",
+                title="Tuition & Fees Information",
+                follow_up_suggestions=follow_ups
+            )
+
+        # PRIORITY WEB SCRAPING: For queries that need current/accurate info from website
+        # These topics should ALWAYS check the website BEFORE using FAQ
+        priority_scraping_keywords = [
+            # Academic structure
+            'vocational school', 'college', 'yüksekokul', 'meslek',
+            'graduate institute', 'lisansüstü', 'postgraduate',
+            'preparatory', 'hazırlık', 'prep school',
+            'coordinator', 'koordinatör',
+            
+            # Services & Resources
+            'library hours', 'library opening', 'kütüphane saatleri', 'grand library',
+            'ects', 'credit transfer', 'credit system',
+            'regulation', 'yönetmelik', 'policy',
+            'distance education', 'online course', 'uzaktan eğitim',
+            
+            # Events & Activities (already handled above but adding for completeness)
+            'announcement', 'duyuru',
+            
+            # Rankings & Recognition
+            'ranking', 'world rank', 'sıralama',
+            'accreditation', 'accredited', 'akreditasyon',
+            'recognition', 'tanınma',
+            
+            # Research & Career
+            'research center', 'araştırma merkezi',
+            'career office', 'job placement', 'kariyer',
+            'publication', 'research output',
+            
+            # Campus Services
+            'sports facilities', 'gym', 'fitness center',
+            'student club', 'kulüp', 'organization',
+            'health service', 'medical center',
+            
+            # Contact & Info
+            'phone number', 'contact information', 'address', 'iletişim',
+            'email address', 'office hours',
+            
+            # Programs
+            'program list', 'available programs', 'departments',
+            'double major', 'minor program', 'çift anadal',
+        ]
+        
+        # Check if query contains priority scraping keywords
+        if any(keyword in msg_lower for keyword in priority_scraping_keywords):
+            scraped_result = self._scrape_neu_website(message_cleaned)
+            if scraped_result:
+                return scraped_result
+            # If scraping fails, still continue to FAQ check as fallback
+
+        # Check FAQ database
         answer = self._find_best_match(message_cleaned)
 
         if answer:
             return answer
 
+        # Try web scraping for anything not in FAQ
         scraped_result = self._scrape_neu_website(message_cleaned)
         if scraped_result:
             return scraped_result
@@ -526,32 +1274,34 @@ class BotLogic:
         if language == "TR":
             return (
                 "Bu konuda veritabanımda henüz özel bilgi yok, ancak size yardımcı olabilirim!<br><br>"
-                "<strong>📚 Faydalı Kaynaklar:</strong><br>"
+                "<strong><svg style='width: 20px; height: 20px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> Önemli Kaynaklar:</strong><br>"
                 "• <a href='https://neu.edu.tr' target='_blank'>NEU Resmi Web Sitesi</a><br>"
-                "• <a href='https://www.google.com/maps?ll=35.226735,33.326385&z=15&t=m&hl=en&gl=ES&mapclient=embed&cid=13187758565112652345' target='_blank'>NEU Kampüs Haritası</a><br>"
-                "• <a href='https://neu.edu.tr/akademik/fakulteler/' target='_blank'>Fakülteler & Dekanlar</a><br>"
-                "• <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portalı</a> (Öğrenci Sistemi)<br>"
-                "• <a href='https://register.neu.edu.tr' target='_blank'>Genius Portalı</a> (Ders Kaydı)<br><br>"
-                "<strong>📞 Direkt İletişim:</strong><br>"
-                "• Uluslararası Ofis: international@neu.edu.tr<br>"
-                "• Öğrenci İşleri: student.affairs@neu.edu.tr<br>"
-                "• Ana Hat: +90 392 680 20 00<br><br>"
-                "Şunlar hakkında soru sorabilirsiniz: kayıt, fakülteler, dekanlar, kampüs haritası, kütüphane, yurtlar, vize, kampüs tesisleri veya öğrenim ücreti."
+                "• <a href='https://neu.edu.tr/en/academic/' target='_blank'>Akademik (Fakülteler, Programlar, Takvim)</a><br>"
+                "• <a href='https://neu.edu.tr/en/student/' target='_blank'>Öğrenci Servisleri</a><br>"
+                "• <a href='https://neu.edu.tr/en/academic/library/' target='_blank'>Kütüphane</a><br>"
+                "• <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portalı</a> - Öğrenci Sistemi<br>"
+                "• <a href='https://register.neu.edu.tr' target='_blank'>Genius Portalı</a> - Ders Kaydı<br><br>"
+                "<strong><svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z'/></svg> İletişim:</strong><br>"
+                "<svg style='width: 16px; height: 16px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z'/></svg> Yakın Doğu Bulvarı, PK: 99138, Lefkoşa / KKTC<br>"
+                "<svg style='width: 16px; height: 16px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z'/></svg> +90 392 223 64 64 / +90 392 680 20 00<br>"
+                "<svg style='width: 16px; height: 16px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> info@neu.edu.tr<br><br>"
+                "<strong><svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/></svg> Popüler Konular:</strong> Fakülteler, Dekanlar, Kayıt, Kütüphane, ECTS, Akademik Takvim, Yurtlar, Burslar, Programlar"
             )
         
         return (
-            "I don't have specific information about that in my database yet, but I can help you find it!<br><br>"
-            "<strong>📚 Useful Resources:</strong><br>"
-            "• <a href='https://neu.edu.tr' target='_blank'>NEU Official Website</a><br>"
-            "• <a href='https://www.google.com/maps?ll=35.226735,33.326385&z=15&t=m&hl=en&gl=ES&mapclient=embed&cid=13187758565112652345' target='_blank'>NEU Campus Map</a><br>"
-            "• <a href='https://neu.edu.tr/akademik/fakulteler/' target='_blank'>Faculties & Deans</a><br>"
-            "• <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portal</a> (Student System)<br>"
-            "• <a href='https://register.neu.edu.tr' target='_blank'>Genius Portal</a> (Course Registration)<br><br>"
-            "<strong>📞 Direct Contact:</strong><br>"
-            "• International Office: international@neu.edu.tr<br>"
-            "• Student Affairs: student.affairs@neu.edu.tr<br>"
-            "• Main Line: +90 392 680 20 00<br><br>"
-            "Try asking about: registration, faculties, deans, campus map, library, dormitories, visa, campus facilities, or tuition."
+            "I couldn't find specific information about that, but here are helpful resources:<br><br>"
+            "<strong><svg style='width: 20px; height: 20px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> Essential Links:</strong><br>"
+            "• <a href='https://neu.edu.tr/en' target='_blank'>NEU Official Website</a><br>"
+            "• <a href='https://neu.edu.tr/en/academic/' target='_blank'>Academic (Faculties, Programs, Calendar)</a><br>"
+            "• <a href='https://neu.edu.tr/en/student/' target='_blank'>Student Services</a><br>"
+            "• <a href='https://neu.edu.tr/en/academic/library/' target='_blank'>Grand Library</a><br>"
+            "• <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portal</a> - Student System<br>"
+            "• <a href='https://register.neu.edu.tr' target='_blank'>Genius Portal</a> - Course Registration<br><br>"
+            "<strong><svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z'/></svg> Contact Information:</strong><br>"
+            "<svg style='width: 16px; height: 16px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z'/></svg> Near East Boulevard, PK: 99138, Nicosia / TRNC<br>"
+            "<svg style='width: 16px; height: 16px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z'/></svg> +90 392 223 64 64 / +90 392 680 20 00<br>"
+            "<svg style='width: 16px; height: 16px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> info@neu.edu.tr<br><br>"
+            "<strong><svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/></svg> Popular Topics:</strong> Faculties, Deans, Registration, Library, ECTS, Academic Calendar, Dormitories, Scholarships, Programs"
         )
 
     def get_session_history(self, session_id: str) -> List[str]:
