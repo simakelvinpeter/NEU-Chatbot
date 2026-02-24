@@ -10,9 +10,16 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 interface ChatWindowProps {
   clearChatTrigger: number;
   language: 'EN' | 'TR';
+  activePage: string;
 }
 
-const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) => {
+
+const ChatWindow: React.FC<ChatWindowProps> = ({
+  clearChatTrigger,
+  language,
+  activePage,
+}) => {
+
   const initialMessage: Message = {
     id: '1',
     content: language === 'EN' 
@@ -193,6 +200,12 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ clearChatTrigger, language }) =
     <div className="flex-1 flex flex-col h-full relative min-w-0 bg-background-light">
       <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
         <div className="flex justify-center">
+          <div className="flex justify-center mt-2">
+  <span className="text-xs font-semibold text-primary bg-primary/10 px-4 py-1 rounded-full">
+    Current Section: {activePage.toUpperCase()}
+  </span>
+</div>
+
           <span className="text-xs font-medium text-[#896161]/60 bg-[#e5e0e0]/30 px-3 py-1 rounded-full">
             Today, {formatTimestamp(new Date())}
           </span>

@@ -10,6 +10,8 @@ const Home: React.FC = () => {
   const [onlineStatus] = useState(true);
   const [language, setLanguage] = useState<'EN' | 'TR'>('EN');
   const [clearChatTrigger, setClearChatTrigger] = useState(0);
+  const [activePage, setActivePage] = useState("portal");
+
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -25,7 +27,12 @@ const Home: React.FC = () => {
 
   return (
     <div className="relative flex h-screen w-full bg-white overflow-hidden">
-      <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+     <Sidebar
+  isOpen={sidebarOpen}
+  onClose={closeSidebar}
+  activePage={activePage}
+  setActivePage={setActivePage}
+/>
       <main className="flex-1 flex flex-col h-screen relative min-w-0">
         <header className="flex-shrink-0 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e5e0e0] bg-white px-6 py-4 shadow-sm z-50 sticky top-0">
           <div className="flex items-center gap-4 text-[#181111]">
@@ -91,7 +98,12 @@ const Home: React.FC = () => {
             </Tooltip>
           </div>
         </header>
-        <ChatWindow clearChatTrigger={clearChatTrigger} language={language} />
+        <ChatWindow
+  clearChatTrigger={clearChatTrigger}
+  language={language}
+  activePage={activePage}
+/>
+
       </main>
     </div>
   );

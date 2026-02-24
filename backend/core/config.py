@@ -2,6 +2,9 @@ from typing import List
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
+    from pydantic import Field
+
+    gemini_api_key: str | None = Field(default=None, alias="GEMINI_API_KEY")
     API_VERSION: str = "v1"
     API_PREFIX: str = "/api"
     PROJECT_NAME: str = "NEU Virtual Assistant API"

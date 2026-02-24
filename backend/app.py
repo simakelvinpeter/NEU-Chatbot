@@ -1,4 +1,15 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+from google import genai
+from core.config import settings
+
+client = genai.Client(api_key=settings.gemini_api_key)
+MODEL_NAME = "gemini-2.0-flash"   # good defaultfrom core.config import settings
+
+genai.configure(api_key=settings.gemini_api_key)
+model = genai.GenerativeModel("gemini-1.5-flash")
 from datetime import datetime
 from pathlib import Path
 from fastapi import FastAPI, File, UploadFile, HTTPException, status
@@ -10,6 +21,13 @@ from routes import chat
 import uuid
 import aiofiles
 
+resp = client.models.generate_content(
+    model=MODEL_NAME,
+    contents="Say hello in one sentence."
+)
+print(resp.text)
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+print("Gemini key loaded:", GEMINI_API_KEY is not None)
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version="1.0.0",

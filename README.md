@@ -37,7 +37,7 @@ A production-ready chatbot for Near East University students. Ask questions abou
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/simakelvinpeter/NEU-Chatbot.git
+
 cd NEU-Chatbot
 ```
 
@@ -165,11 +165,7 @@ Ask the bot:
 
 MIT License
 
-## 👨‍💻 Author
 
-**EJAY MASALU**
-- GitHub: [@simakelvinpeter](https://github.com/simakelvinpeter)
-- Email: simapeter313@gmail.com
 
 ## 🙏 Acknowledgments
 
