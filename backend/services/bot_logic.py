@@ -1,3 +1,4 @@
+from services.gemini_service import ask_gemini
 import random
 import requests
 from bs4 import BeautifulSoup
@@ -574,57 +575,45 @@ class BotLogic:
         return any(message_lower.startswith(greet) or message_lower == greet for greet in greetings)
 
     def _is_acknowledgment(self, message: str) -> bool:
-        acknowledgments = ["nice", "ok", "okay", "good", "great", "cool", "thanks", "thank you", "awesome", "perfect"]
+        acknowledgments = ["thanks", "thank you", "awesome", "perfect"]
         message_lower = message.lower().strip()
-        return message_lower in acknowledgments or any(message_lower == ack for ack in acknowledgments)
-
+        return message_lower in acknowledgments
     def _find_best_match(self, message: str) -> Optional[str]:
         message_lower = message.lower().strip()
 
-        # First try exact match
+        # Exact match first
         if message_lower in self.faq:
             return self.faq[message_lower]
 
-        # Try partial match with improved scoring
         best_match = None
         best_score = 0
 
+        message_words = set(message_lower.split())
+
         for faq_key, answer in self.faq.items():
             faq_words = set(faq_key.split())
-            message_words = set(message_lower.split())
 
-            # Calculate matching words
             matching_words = faq_words.intersection(message_words)
 
-            # Skip if no matching words for single-word queries
-            if len(matching_words) == 0:
+            # Require at least 2 matching words
+            if len(matching_words) < 2:
                 continue
 
-            # For single-word messages, require at least 1 match
-            # For multi-word messages, require at least 2 matches
-            min_matches = 1 if len(message_words) <= 2 else 2
-            if len(matching_words) < min_matches:
-                continue
+            score = len(matching_words)
 
-            # Calculate score based on:
-            # 1. Number of matching words
-            # 2. Percentage of FAQ words matched
-            # 3. Specificity (prefer longer FAQ keys with good matches)
-            match_count = len(matching_words)
-            match_ratio = match_count / len(faq_words)
-            specificity_bonus = len(faq_words) * 0.1
-
-            score = match_count + (match_ratio * 5) + specificity_bonus
-
-            # Bonus if FAQ key is fully contained in message
-            if all(word in message_lower for word in faq_words):
-                score += 10
+            # Bonus if full FAQ key is inside message
+            if faq_key in message_lower:
+                score += 5
 
             if score > best_score:
                 best_score = score
                 best_match = answer
 
-        return best_match
+        # Only return if strong match
+        if best_score >= 2:
+            return best_match
+
+        return None
 
     def _scrape_neu_website(self, query: str) -> Optional[str]:
         try:
@@ -927,26 +916,75 @@ class BotLogic:
     def generate_response(self, message: str, session_id: str, language: str = "EN") -> str:
         if session_id not in self.sessions:
             self.sessions[session_id] = []
-
+    
         self.sessions[session_id].append(message)
-
+    
         message_cleaned = message.strip()
         msg_lower = message_cleaned.lower()
-
+    
         if self._is_greeting(message_cleaned):
             return random.choice(self.greetings)
-
+    
         if self._is_acknowledgment(message_cleaned):
             answer = self._find_best_match(message_cleaned)
             if answer:
                 return answer
-            return "You're welcome! Is there anything else you'd like to know about Near East University?" if language == "EN" else "Rica ederim! Near East Üniversitesi hakkında başka bilgi almak ister misiniz?"
+            return "You're welcome! Is there anything else you'd like to know about Near East University?" if language == "EN" else "Rica ederim! Near East ├£niversitesi hakk─▒nda ba┼ƒka bilgi almak ister misiniz?"
+
+        # FAQ lookup early (before scraping)
+        answer = self._find_best_match(message_cleaned)
+        if answer:
+            return answer
+
+        # --- EARLY AI FALLBACK (Gemini) ---
+        # by moving this block ahead of scraping, AI can answer more queries
+        try:
+            # craft prompt with explicit language guidance to avoid unexpected translations
+            if language == "EN":
+                lang_instruction = "Please respond in English."
+            else:
+                lang_instruction = "Lütfen Türkçe cevap verin."
+
+            prompt = f"""
+You are the Near East University (NEU) Virtual Assistant.
+Answer clearly and concisely.
+If the question is unrelated to NEU, answer briefly and suggest official resources.
+If unsure, say you are unsure and suggest where to verify.
+
+User question: {message_cleaned}
+Language: {language}
+{lang_instruction}
+"""
+            print(">>> GEMINI FALLBACK EARLY:", message_cleaned)
+            ai_answer = ask_gemini(prompt)
+            if ai_answer and ai_answer.strip():
+                text = ai_answer.strip()
+                # if user expects English but the AI accidentally returned Turkish,
+                # check for a few common Turkish words and attempt translation.
+                if language == "EN":
+                    turkish_indicators = ["merhaba", "teşekkür", "lütfen", "şu", "bir", "iki", "ücret", "sorun", "evet", "hayır"]
+                    low = text.lower()
+                    if any(word in low for word in turkish_indicators):
+                        print("Detected possible Turkish response, translating to English...")
+                        # simple translation request
+                        translation_prompt = f"Translate the following Turkish text into English in a clear and natural way:\n\n{text}"
+                        translated = ask_gemini(translation_prompt)
+                        if translated and translated.strip():
+                            text = translated.strip()
+
+                return self._format_response(
+                    text.replace("\n", "<br>"),
+                    response_type="info",
+                    title="Answer"
+                )
+        except Exception as e:
+            print("Gemini early error:", e)
 
         # PRIORITY WEB SCRAPING: Handle specific queries that need website info FIRST
         # These should be checked BEFORE map/location queries to avoid false matches
         
         # Ranking queries - check early
-        if any(word in msg_lower for word in ["rank", "ranking", "ranked", "world rank", "world ranking", "position", "sıralama"]):
+        if any(word in msg_lower for word in ["rank", "ranking", "ranked", "world rank", "world ranking", "position", "s─▒ralama"]):
             if not any(word in msg_lower for word in ["tournament", "event", "competition"]):
                 scraped_result = self._scrape_neu_website(message_cleaned)
                 if scraped_result:
@@ -956,9 +994,9 @@ class BotLogic:
                     "For current NEU rankings and recognition:<br><br>"
                     "<svg style='width: 18px; height: 18px; fill: #007aff; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M3 9h4V5H3v4zm0 5h4v-4H3v4zm5 0h4v-4H8v4zm5 0h4v-4h-4v4zm-10 5h4v-4H3v4zm5 0h4v-4H8v4zm5 0h4v-4h-4v4zm5-14v4h4V5h-4zm0 9h4v-4h-4v4z'/></svg> <strong><a href='https://neu.edu.tr/en/about-us/world-ranking/' target='_blank'>View NEU World Rankings</a></strong><br><br>"
                     "Near East University is recognized in various international university ranking systems including:<br>"
-                    "• QS World University Rankings<br>"
-                    "• Times Higher Education Rankings<br>"
-                    "• Regional Rankings<br><br>"
+                    "ΓÇó QS World University Rankings<br>"
+                    "ΓÇó Times Higher Education Rankings<br>"
+                    "ΓÇó Regional Rankings<br><br>"
                     "<svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z'/></svg> Contact: +90 392 680 20 00<br>"
                     "<svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z'/></svg> Email: info@neu.edu.tr"
                 )
@@ -973,10 +1011,10 @@ class BotLogic:
                 "For dormitory and housing options at NEU:<br><br>"
                 "<svg style='width: 18px; height: 18px; fill: #007aff; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/></svg> <strong><a href='https://neu.edu.tr/en/student/accommodation/' target='_blank'>View Accommodation Options</a></strong><br><br>"
                 "NEU offers various accommodation options:<br>"
-                "• On-campus dormitories<br>"
-                "• Different room types (single, double, triple)<br>"
-                "• All utilities included<br>"
-                "• 24/7 security<br><br>"
+                "ΓÇó On-campus dormitories<br>"
+                "ΓÇó Different room types (single, double, triple)<br>"
+                "ΓÇó All utilities included<br>"
+                "ΓÇó 24/7 security<br><br>"
                 "<svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z'/></svg> Contact: +90 392 680 20 00<br>"
                 "<svg style='width: 18px; height: 18px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> Email: accommodation@neu.edu.tr"
             )
@@ -994,11 +1032,11 @@ class BotLogic:
                     "For current semester dates, holidays, and academic schedule:<br><br>"
                     "<svg style='width: 18px; height: 18px; fill: #007aff; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M3 9h4V5H3v4zm0 5h4v-4H3v4zm5 0h4v-4H8v4zm5 0h4v-4h-4v4zm-10 5h4v-4H3v4zm5 0h4v-4H8v4zm5 0h4v-4h-4v4zm5-14v4h4V5h-4zm0 9h4v-4h-4v4z'/></svg> <strong><a href='https://neu.edu.tr/en/academic/academic-calendar/' target='_blank'>View Academic Calendar</a></strong><br><br>"
                     "This includes:<br>"
-                    "• Semester start and end dates<br>"
-                    "• Registration periods<br>"
-                    "• Exam schedules<br>"
-                    "• Public holidays<br>"
-                    "• Important academic deadlines<br><br>"
+                    "ΓÇó Semester start and end dates<br>"
+                    "ΓÇó Registration periods<br>"
+                    "ΓÇó Exam schedules<br>"
+                    "ΓÇó Public holidays<br>"
+                    "ΓÇó Important academic deadlines<br><br>"
                     "<svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z'/></svg> Contact: +90 392 680 20 00"
                 )
         
@@ -1012,13 +1050,13 @@ class BotLogic:
                 return (
                     "<svg style='width: 20px; height: 20px; fill: #ff9500; vertical-align: middle; margin-right: 8px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> <strong>Events & Tournaments</strong><br><br>"
                     "For current events, tournaments, and activities at NEU:<br><br>"
-                    "• <a href='https://neu.edu.tr/en/announcements/' target='_blank'>NEU Announcements</a><br>"
-                    "• <a href='https://neu.edu.tr/en/events/' target='_blank'>NEU Events Calendar</a><br>"
-                    "• <a href='https://neu.edu.tr/en/campus-life/sports/' target='_blank'>Sports & Activities</a><br><br>"
+                    "ΓÇó <a href='https://neu.edu.tr/en/announcements/' target='_blank'>NEU Announcements</a><br>"
+                    "ΓÇó <a href='https://neu.edu.tr/en/events/' target='_blank'>NEU Events Calendar</a><br>"
+                    "ΓÇó <a href='https://neu.edu.tr/en/campus-life/sports/' target='_blank'>Sports & Activities</a><br><br>"
                     "<svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z'/></svg> Contact: Department of Health, Culture and Sports<br>"
                     "<svg style='width: 18px; height: 18px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> Email: info@neu.edu.tr"
                 )
-
+    
         # Priority handling for dean queries - ALWAYS scrape website for accurate info
         # Exclude if query is about events/tournaments (like "inter faculty tournament")
         if (any(word in msg_lower for word in ["dean of", "dekan", "faculty dean", "head of faculty", "faculty head"]) and 
@@ -1052,10 +1090,10 @@ class BotLogic:
                         f"For current dean information and faculty details, please visit:<br><br>"
                         f"<svg style='width: 20px; height: 20px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> <strong><a href='{faculty_url}' target='_blank'>{faculty_name.title()} Faculty Page</a></strong><br><br>"
                         f"You can find:<br>"
-                        f"• Current dean contact information<br>"
-                        f"• Department heads<br>"
-                        f"• Faculty office details<br>"
-                        f"• Academic staff directory<br><br>"
+                        f"ΓÇó Current dean contact information<br>"
+                        f"ΓÇó Department heads<br>"
+                        f"ΓÇó Faculty office details<br>"
+                        f"ΓÇó Academic staff directory<br><br>"
                         f"<svg style='width: 18px; height: 18px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> For urgent inquiries: info@neu.edu.tr"
                     )
             
@@ -1065,17 +1103,17 @@ class BotLogic:
                 "For current and accurate information about all faculty deans, please visit:<br><br>"
                 "<svg style='width: 18px; height: 18px; fill: #ff9500; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z'/></svg> <strong><a href='https://neu.edu.tr/en/academic/faculties/' target='_blank'>View All Faculties & Their Deans</a></strong><br><br>"
                 "This page provides:<br>"
-                "• Complete list of all 16 faculties<br>"
-                "• Current dean names and contact information<br>"
-                "• Department heads and academic staff<br>"
-                "• Faculty office locations and hours<br><br>"
+                "ΓÇó Complete list of all 16 faculties<br>"
+                "ΓÇó Current dean names and contact information<br>"
+                "ΓÇó Department heads and academic staff<br>"
+                "ΓÇó Faculty office locations and hours<br><br>"
                 "<svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/></svg> <strong>Tip:</strong> You can ask about a specific faculty, for example:<br>"
-                "• 'Who is the dean of Medicine?'<br>"
-                "• 'Dean of Engineering faculty'<br>"
-                "• 'Pharmacy faculty dean contact'<br><br>"
+                "ΓÇó 'Who is the dean of Medicine?'<br>"
+                "ΓÇó 'Dean of Engineering faculty'<br>"
+                "ΓÇó 'Pharmacy faculty dean contact'<br><br>"
                 "<svg style='width: 18px; height: 18px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> General inquiries: info@neu.edu.tr"
             )
-
+    
         # Special handling for map/location queries with embedded map
         # Only trigger if it's actually asking for a location/direction
         # Exclude queries about events, tournaments, calendar, schedules
@@ -1105,7 +1143,7 @@ class BotLogic:
                 "grand hospital": "neu_hospital",
                 "hastane": "neu_hospital",
                 "library": "grand_library",
-                "kütüphane": "grand_library",
+                "k├╝t├╝phane": "grand_library",
                 "kutuphan": "grand_library",
                 "mosque": "neu_mosque",
                 "cami": "neu_mosque",
@@ -1131,7 +1169,7 @@ class BotLogic:
                 "pool": "olympic_pool",
                 "swimming": "olympic_pool",
                 "rectorate": "rectorate",
-                "rektörlük": "rectorate",
+                "rekt├╢rl├╝k": "rectorate",
                 "administration": "rectorate",
                 "international office": "international_office",
                 "student affairs": "student_affairs",
@@ -1199,58 +1237,58 @@ class BotLogic:
                     "Bank Location": "Near East Bank on campus (next to Rectorate Building)",
                     "Financial Office": "Check balances in Genius Portal under 'Financial' section"
                 },
-                "💰"
+                "≡ƒÆ░"
             )
             
             follow_ups = ["Near East Bank location", "Scholarship options", "Payment deadline"]
             
             return self._format_response(
-                info_card + "<br>💡 <strong>Tip:</strong> Full payment often includes discounts. Ask the Financial Office for current rates!",
+                info_card + "<br>≡ƒÆí <strong>Tip:</strong> Full payment often includes discounts. Ask the Financial Office for current rates!",
                 response_type="info",
                 title="Tuition & Fees Information",
                 follow_up_suggestions=follow_ups
             )
-
+    
         # PRIORITY WEB SCRAPING: For queries that need current/accurate info from website
         # These topics should ALWAYS check the website BEFORE using FAQ
         priority_scraping_keywords = [
             # Academic structure
-            'vocational school', 'college', 'yüksekokul', 'meslek',
-            'graduate institute', 'lisansüstü', 'postgraduate',
-            'preparatory', 'hazırlık', 'prep school',
-            'coordinator', 'koordinatör',
+            'vocational school', 'college', 'y├╝ksekokul', 'meslek',
+            'graduate institute', 'lisans├╝st├╝', 'postgraduate',
+            'preparatory', 'haz─▒rl─▒k', 'prep school',
+            'coordinator', 'koordinat├╢r',
             
             # Services & Resources
-            'library hours', 'library opening', 'kütüphane saatleri', 'grand library',
+            'library hours', 'library opening', 'k├╝t├╝phane saatleri', 'grand library',
             'ects', 'credit transfer', 'credit system',
-            'regulation', 'yönetmelik', 'policy',
-            'distance education', 'online course', 'uzaktan eğitim',
+            'regulation', 'y├╢netmelik', 'policy',
+            'distance education', 'online course', 'uzaktan e─ƒitim',
             
             # Events & Activities (already handled above but adding for completeness)
             'announcement', 'duyuru',
             
             # Rankings & Recognition
-            'ranking', 'world rank', 'sıralama',
+            'ranking', 'world rank', 's─▒ralama',
             'accreditation', 'accredited', 'akreditasyon',
-            'recognition', 'tanınma',
+            'recognition', 'tan─▒nma',
             
             # Research & Career
-            'research center', 'araştırma merkezi',
+            'research center', 'ara┼ƒt─▒rma merkezi',
             'career office', 'job placement', 'kariyer',
             'publication', 'research output',
             
             # Campus Services
             'sports facilities', 'gym', 'fitness center',
-            'student club', 'kulüp', 'organization',
+            'student club', 'kul├╝p', 'organization',
             'health service', 'medical center',
             
             # Contact & Info
-            'phone number', 'contact information', 'address', 'iletişim',
+            'phone number', 'contact information', 'address', 'ileti┼ƒim',
             'email address', 'office hours',
             
             # Programs
             'program list', 'available programs', 'departments',
-            'double major', 'minor program', 'çift anadal',
+            'double major', 'minor program', '├ºift anadal',
         ]
         
         # Check if query contains priority scraping keywords
@@ -1259,51 +1297,51 @@ class BotLogic:
             if scraped_result:
                 return scraped_result
             # If scraping fails, still continue to FAQ check as fallback
-
+    
         # Check FAQ database
         answer = self._find_best_match(message_cleaned)
-
+    
         if answer:
             return answer
-
+    
         # Try web scraping for anything not in FAQ
         scraped_result = self._scrape_neu_website(message_cleaned)
         if scraped_result:
             return scraped_result
-
+    
         if language == "TR":
             return (
-                "Bu konuda veritabanımda henüz özel bilgi yok, ancak size yardımcı olabilirim!<br><br>"
-                "<strong><svg style='width: 20px; height: 20px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> Önemli Kaynaklar:</strong><br>"
-                "• <a href='https://neu.edu.tr' target='_blank'>NEU Resmi Web Sitesi</a><br>"
-                "• <a href='https://neu.edu.tr/en/academic/' target='_blank'>Akademik (Fakülteler, Programlar, Takvim)</a><br>"
-                "• <a href='https://neu.edu.tr/en/student/' target='_blank'>Öğrenci Servisleri</a><br>"
-                "• <a href='https://neu.edu.tr/en/academic/library/' target='_blank'>Kütüphane</a><br>"
-                "• <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portalı</a> - Öğrenci Sistemi<br>"
-                "• <a href='https://register.neu.edu.tr' target='_blank'>Genius Portalı</a> - Ders Kaydı<br><br>"
-                "<strong><svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z'/></svg> İletişim:</strong><br>"
-                "<svg style='width: 16px; height: 16px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z'/></svg> Yakın Doğu Bulvarı, PK: 99138, Lefkoşa / KKTC<br>"
+                "Bu konuda veritaban─▒mda hen├╝z ├╢zel bilgi yok, ancak size yard─▒mc─▒ olabilirim!<br><br>"
+                "<strong><svg style='width: 20px; height: 20px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> ├ûnemli Kaynaklar:</strong><br>"
+                "ΓÇó <a href='https://neu.edu.tr' target='_blank'>NEU Resmi Web Sitesi</a><br>"
+                "ΓÇó <a href='https://neu.edu.tr/en/academic/' target='_blank'>Akademik (Fak├╝lteler, Programlar, Takvim)</a><br>"
+                "ΓÇó <a href='https://neu.edu.tr/en/student/' target='_blank'>├û─ƒrenci Servisleri</a><br>"
+                "ΓÇó <a href='https://neu.edu.tr/en/academic/library/' target='_blank'>K├╝t├╝phane</a><br>"
+                "ΓÇó <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portal─▒</a> - ├û─ƒrenci Sistemi<br>"
+                "ΓÇó <a href='https://register.neu.edu.tr' target='_blank'>Genius Portal─▒</a> - Ders Kayd─▒<br><br>"
+                "<strong><svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z'/></svg> ─░leti┼ƒim:</strong><br>"
+                "<svg style='width: 16px; height: 16px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z'/></svg> Yak─▒n Do─ƒu Bulvar─▒, PK: 99138, Lefko┼ƒa / KKTC<br>"
                 "<svg style='width: 16px; height: 16px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z'/></svg> +90 392 223 64 64 / +90 392 680 20 00<br>"
                 "<svg style='width: 16px; height: 16px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> info@neu.edu.tr<br><br>"
-                "<strong><svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/></svg> Popüler Konular:</strong> Fakülteler, Dekanlar, Kayıt, Kütüphane, ECTS, Akademik Takvim, Yurtlar, Burslar, Programlar"
+                "<strong><svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/></svg> Pop├╝ler Konular:</strong> Fak├╝lteler, Dekanlar, Kay─▒t, K├╝t├╝phane, ECTS, Akademik Takvim, Yurtlar, Burslar, Programlar"
             )
         
         return (
             "I couldn't find specific information about that, but here are helpful resources:<br><br>"
             "<strong><svg style='width: 20px; height: 20px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg> Essential Links:</strong><br>"
-            "• <a href='https://neu.edu.tr/en' target='_blank'>NEU Official Website</a><br>"
-            "• <a href='https://neu.edu.tr/en/academic/' target='_blank'>Academic (Faculties, Programs, Calendar)</a><br>"
-            "• <a href='https://neu.edu.tr/en/student/' target='_blank'>Student Services</a><br>"
-            "• <a href='https://neu.edu.tr/en/academic/library/' target='_blank'>Grand Library</a><br>"
-            "• <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portal</a> - Student System<br>"
-            "• <a href='https://register.neu.edu.tr' target='_blank'>Genius Portal</a> - Course Registration<br><br>"
+            "ΓÇó <a href='https://neu.edu.tr/en' target='_blank'>NEU Official Website</a><br>"
+            "ΓÇó <a href='https://neu.edu.tr/en/academic/' target='_blank'>Academic (Faculties, Programs, Calendar)</a><br>"
+            "ΓÇó <a href='https://neu.edu.tr/en/student/' target='_blank'>Student Services</a><br>"
+            "ΓÇó <a href='https://neu.edu.tr/en/academic/library/' target='_blank'>Grand Library</a><br>"
+            "ΓÇó <a href='https://uzebim.neu.edu.tr' target='_blank'>Uzebim Portal</a> - Student System<br>"
+            "ΓÇó <a href='https://register.neu.edu.tr' target='_blank'>Genius Portal</a> - Course Registration<br><br>"
             "<strong><svg style='width: 18px; height: 18px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z'/></svg> Contact Information:</strong><br>"
             "<svg style='width: 16px; height: 16px; fill: #ff2d55; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z'/></svg> Near East Boulevard, PK: 99138, Nicosia / TRNC<br>"
             "<svg style='width: 16px; height: 16px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z'/></svg> +90 392 223 64 64 / +90 392 680 20 00<br>"
             "<svg style='width: 16px; height: 16px; fill: #5856d6; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V6c0-1.1-.9-2-2-2zm-2 12H4V6h14v10z'/></svg> info@neu.edu.tr<br><br>"
             "<strong><svg style='width: 18px; height: 18px; fill: #34c759; vertical-align: middle; margin-right: 6px;' viewBox='0 0 24 24'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/></svg> Popular Topics:</strong> Faculties, Deans, Registration, Library, ECTS, Academic Calendar, Dormitories, Scholarships, Programs"
         )
-
+    
     def get_session_history(self, session_id: str) -> List[str]:
         return self.sessions.get(session_id, [])
 
