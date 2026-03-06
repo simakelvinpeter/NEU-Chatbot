@@ -1,14 +1,64 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Near East University Virtual Assistant - Get instant answers to your questions about NEU" />
-    <title>NEU Virtual Assistant</title>
+    <meta
+      name="description"
+      content="Near East University Virtual Assistant - Get instant answers to your questions about NEU"
+    />
+    <title>NEAR EAST UNIVERSITY AI</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <section class="hero" id="hero-section">
+      <div class="hero-overlay"></div>
+      <img class="hero-image" src="/assets/NearEastUniversity.webp" alt="Near East University campus" />
+      <div class="hero-content">
+        <img class="hero-logo" src="/assets/NearEastUniversity.webp" alt="" aria-hidden="true" />
+        <h1>NEAR EAST UNIVERSITY AI</h1>
+        <p>Your intelligent assistant for campus life, academics, and student services.</p>
+        <button class="hero-cta" id="start-chat-btn" type="button">Start Chat</button>
+      </div>
+    </section>
+
+    <section id="chat-section" class="chat-shell chat-hidden">
+      <div class="chat-card">
+        <header class="topbar">
+          <div>
+            <h2>NEU AI Assistant</h2>
+            <p class="status"><span class="dot"></span>Online</p>
+          </div>
+          <button id="clear-chat" class="secondary-btn" type="button">Clear Chat</button>
+        </header>
+
+        <main class="chat-area">
+          <div id="quick-actions" class="quick-actions" aria-label="Quick actions"></div>
+          <div id="messages" class="messages" aria-live="polite"></div>
+        </main>
+
+        <footer class="composer-wrap">
+          <form id="chat-form" class="composer" autocomplete="off">
+            <textarea
+              id="message-input"
+              rows="1"
+              placeholder="Type your message..."
+              aria-label="Type your message"
+            ></textarea>
+            <button id="send-btn" class="primary-btn" type="submit">Send</button>
+          </form>
+          <p class="disclaimer">
+            Verify critical information from official NEU channels.
+          </p>
+          <p class="owner-note">Built by Simaclaverly</p>
+        </footer>
+      </div>
+    </section>
+
+    <script src="./script.js"></script>
   </body>
 </html>
+
+
+
+

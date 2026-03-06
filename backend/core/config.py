@@ -1,10 +1,12 @@
-from typing import List
+﻿from typing import List
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     from pydantic import Field
 
-    gemini_api_key: str | None = Field(default=None, alias="GEMINI_API_KEY")
+    openai_api_key: str | None = Field(default=None, alias="OPENAI_API_KEY")
+    openai_base_url: str | None = Field(default=None, alias="OPENAI_BASE_URL")
+    openai_model: str = Field(default="gpt-4o-mini", alias="OPENAI_MODEL")
     API_VERSION: str = "v1"
     API_PREFIX: str = "/api"
     PROJECT_NAME: str = "NEU Virtual Assistant API"
@@ -28,3 +30,7 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 settings = Settings()
+
+
+
+

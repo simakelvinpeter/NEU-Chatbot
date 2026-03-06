@@ -1,4 +1,4 @@
-import os
+﻿import os
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -14,12 +14,6 @@ from models.message import HealthResponse, FileUploadResponse
 from routes import chat
 
 load_dotenv()
-
-from google import genai
-
-# Create Gemini client once
-client = genai.Client(api_key=settings.gemini_api_key)
-MODEL_NAME = "gemini-2.0-flash"
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -107,19 +101,16 @@ async def upload_file(file: UploadFile = File(...)) -> FileUploadResponse:
 
 @app.on_event("startup")
 async def startup_event():
-    print(f"🚀 {settings.PROJECT_NAME} is starting...")
-    print(f"📚 Documentation available at: http://{settings.HOST}:{settings.PORT}/docs")
-    print(f"🔧 Debug mode: {settings.DEBUG}")
-    print("Gemini key loaded:", bool(settings.gemini_api_key))
+    print(f"€ {settings.PROJECT_NAME} is starting...")
+    print(f"š Documentation available at: http://{settings.HOST}:{settings.PORT}/docs")
+    print(f" Debug mode: {settings.DEBUG}")
+    print("OpenAI key loaded:", bool(settings.openai_api_key))
 
-    # OPTIONAL: quick sanity test (comment out if you don’t want a startup call)
-    # resp = client.models.generate_content(model=MODEL_NAME, contents="Say hello in one sentence.")
-    # print("Gemini test:", resp.text)
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    print(f"👋 {settings.PROJECT_NAME} is shutting down...")
+    print(f"‹ {settings.PROJECT_NAME} is shutting down...")
 
 
 if __name__ == "__main__":
@@ -132,3 +123,6 @@ if __name__ == "__main__":
         reload=settings.DEBUG,
         log_level="info",
     )
+
+
+

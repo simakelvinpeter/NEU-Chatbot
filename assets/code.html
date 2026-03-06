@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NEU AI Chatbot - Near East University</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#003366",
+                        "background-light": "#F4F7F9",
+                        "background-dark": "#0F172A",
+                        "neu-blue": "#003366",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "8px",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .chat-container {
+            height: calc(100vh - 120px);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<section class="relative h-[80vh] w-full flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Near East University Campus" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlaMmUDQ6BYFjSZEBXkk4Itm9G_Sd9v84G3U5Pd0zYFuez52wYTgxZBBNgH-slcMnr2QwPvtjWCr8bR5Z54PdF4vmwvYPRYZksEHbN46zAvdn2_Pq-F7A43N-4IXGzvNFHIddRNq0EyQnpimNV9rBD2R9RqOerJ6Ymq6LxoPgEsbuE7a2oo11w5lTaOqQt3S_uKA_SBDvVhyvDYl3qeYqz20kOr6RqipttmIkO47yk0-NEDkDgNPYmasJdAenYgpWmZOGR-xANh06A"/>
+<div class="absolute inset-0 bg-primary/80 backdrop-blur-[2px]"></div>
+</div>
+<div class="relative z-10 max-w-lg">
+<div class="mb-6 inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-md rounded-full">
+<span class="material-icons text-white text-3xl">school</span>
+</div>
+<h1 class="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                NEAR EAST UNIVERSITY AI
+            </h1>
+<p class="text-white/80 text-lg mb-8 leading-relaxed font-light">
+                Your intelligent assistant for campus life, academics, and student services.
+            </p>
+<a class="inline-flex items-center px-8 py-4 bg-white text-primary font-semibold rounded-full shadow-lg hover:bg-opacity-90 transition-all active:scale-95" href="#chat-section">
+                Start Chat
+                <span class="material-icons ml-2">chat_bubble</span>
+</a>
+</div>
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
+<span class="material-icons">expand_more</span>
+</div>
+</section>
+<section class="max-w-3xl mx-auto px-4 py-8 min-h-screen flex flex-col" id="chat-section">
+<div class="flex items-center justify-between mb-6 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex items-center space-x-3">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-icons text-xl">smart_toy</span>
+</div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full"></div>
+</div>
+<div>
+<h2 class="font-bold text-slate-800 dark:text-white leading-tight">NEU AI Assistant</h2>
+<span class="text-xs text-green-500 font-medium">Online</span>
+</div>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+<span class="material-icons">info_outline</span>
+</button>
+</div>
+<div class="flex-1 space-y-6 mb-6">
+<div class="flex flex-col items-start space-y-2 max-w-[85%]">
+<div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl rounded-tl-none shadow-sm text-sm md:text-base leading-relaxed">
+                    Hello! I'm your NEU AI assistant. How can I help you today? You can ask me about registration, campus facilities, or tuition fees.
+                </div>
+<span class="text-[10px] text-slate-400 ml-1">10:00 AM</span>
+</div>
+<div class="flex flex-col items-end space-y-2 ml-auto max-w-[85%]">
+<div class="bg-slate-200 dark:bg-slate-700 p-4 rounded-2xl rounded-tr-none text-slate-800 dark:text-slate-100 text-sm md:text-base leading-relaxed">
+                    I need information about the 2024 Fall Registration process.
+                </div>
+<span class="text-[10px] text-slate-400 mr-1">10:01 AM</span>
+</div>
+<div class="flex flex-col items-start space-y-4 max-w-[90%]">
+<div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl rounded-tl-none shadow-sm text-sm md:text-base leading-relaxed">
+                    Sure! Here is the registration guide for the upcoming semester:
+                </div>
+<div class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-md">
+<div class="bg-primary p-3 text-white flex items-center">
+<span class="material-icons mr-2 text-sm">assignment</span>
+<span class="text-sm font-semibold uppercase tracking-wider">Registration Info</span>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-2">
+<span class="text-xs text-slate-500 uppercase">Status</span>
+<span class="text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded">OPEN</span>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-slate-800 dark:text-slate-100">Fall 2024 Enrollment</h4>
+<p class="text-xs text-slate-600 dark:text-slate-400">Complete your online registration via the SIS portal before September 15th.</p>
+</div>
+<button class="w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-primary hover:text-white transition-all text-xs font-bold rounded text-primary dark:text-slate-200 uppercase">
+                            Go to SIS Portal
+                        </button>
+</div>
+</div>
+<span class="text-[10px] text-slate-400 ml-1">10:01 AM</span>
+</div>
+<div class="flex flex-wrap gap-2 pt-2">
+<button class="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-primary hover:text-primary transition-all shadow-sm">
+                    💰 Tuition
+                </button>
+<button class="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-primary hover:text-primary transition-all shadow-sm">
+                    📍 Campus Map
+                </button>
+<button class="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-primary hover:text-primary transition-all shadow-sm">
+                    🏠 Dormitories
+                </button>
+</div>
+</div>
+<div class="mt-auto pt-6 pb-12 sticky bottom-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="flex flex-col space-y-3">
+<div class="relative bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 p-2 flex items-end space-x-2 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 text-slate-800 dark:text-white resize-none py-2 px-3 text-sm md:text-base leading-normal hide-scrollbar" placeholder="Type your message..." rows="1" style="max-height: 120px;"></textarea>
+<button class="w-10 h-10 bg-primary text-white rounded-lg flex items-center justify-center hover:opacity-90 active:scale-90 transition-all flex-shrink-0 mb-0.5">
+<span class="material-icons">send</span>
+</button>
+</div>
+<div class="flex justify-center">
+<button class="text-xs text-slate-400 hover:text-red-500 transition-colors flex items-center space-x-1">
+<span class="material-icons text-sm">delete_sweep</span>
+<span>Clear Chat History</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<footer class="bg-white dark:bg-slate-900 py-8 border-t border-slate-100 dark:border-slate-800">
+<div class="container mx-auto px-6 text-center">
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                © 2024 Near East University. All Rights Reserved.
+            </p>
+<div class="mt-4 flex justify-center space-x-4">
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-icons">facebook</span></a>
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-icons">language</span></a>
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-icons">mail</span></a>
+</div>
+</div>
+</footer>
+<script>
+        // Auto-expand textarea
+        const tx = document.getElementsByTagName("textarea");
+        for (let i = 0; i < tx.length; i++) {
+            tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+            tx[i].addEventListener("input", OnInput, false);
+        }
+        function OnInput() {
+            this.style.height = "auto";
+            this.style.height = (this.scrollHeight) + "px";
+        }
+    </script>
+
+</body></html>

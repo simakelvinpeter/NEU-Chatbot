@@ -1,4 +1,4 @@
-import uuid
+﻿import uuid
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, status
 from models.message import ChatRequest, ChatResponse
@@ -10,8 +10,8 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 async def chat(request: ChatRequest) -> ChatResponse:
     try:
         session_id = request.session_id or str(uuid.uuid4())
-        language = request.language or "EN"
-        bot_message = bot.generate_response(request.message, session_id, language)
+        bot_message = bot.generate_response(request.message, session_id, "EN")
+        bot_message = bot.enforce_english_response(bot_message)
         
         response = ChatResponse(
             message=bot_message,
@@ -84,3 +84,7 @@ async def clear_session(session_id: str):
         )
     
     return None
+
+
+
+

@@ -1,11 +1,11 @@
-from datetime import datetime
+﻿from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field
 
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=1000, description="User's message")
     session_id: Optional[str] = Field(None, description="Session ID for conversation continuity")
-    language: Optional[str] = Field("EN", description="Language preference: EN or TR")
+    language: Optional[str] = Field("EN", description="Language preference (responses are English-only)")
 
     class Config:
         json_schema_extra = {
@@ -59,3 +59,7 @@ class FileUploadResponse(BaseModel):
                 "size": 1024000
             }
         }
+
+
+
+

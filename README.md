@@ -1,173 +1,68 @@
-# NEU Virtual Assistant Chatbot
+﻿# NEU Virtual Assistant
 
-A production-ready chatbot for Near East University students. Ask questions about admissions, faculties, campus locations, dorms, and get instant answers with clickable map links.
+Simple full-stack chatbot for Near East University (NEU).
 
-## 🚀 Features
+## What This Project Does
+- Provides answers to common NEU questions (registration, faculties, dorms, campus services).
+- Supports chat history by `session_id`.
+- Uses a local NEU knowledge base and AI-assisted responses.
+- Shows a branded landing page and chat UI.
 
-- 💬 171+ FAQ entries covering all NEU topics
-- 🗺️ Interactive Google Maps integration with precise GPS coordinates
-- 🔍 Smart web scraping from neu.edu.tr for unknown questions
-- 📍 15+ campus building locations (faculties, banks, library, hospital)
-- 🎨 NEU brand colors and professional design
-- ⚡ Real-time responses with session management
+## Tech Stack
+- Backend: FastAPI, Pydantic, Uvicorn
+- Frontend: Vanilla HTML/CSS/JavaScript, Node static server
 
-## 🛠️ Tech Stack
+## Requirements
+- Python 3.10+
+- Node.js 18+
 
-### Frontend
-- **React 18** - UI framework
-- **TypeScript** - Type safety
-- **Vite 5.4** - Fast build tool
-- **Tailwind CSS** - Styling
-- **Axios** - HTTP client
+## Quick Start (Windows PowerShell)
 
-### Backend
-- **Python 3.14** - Programming language
-- **FastAPI 0.104** - Web framework
-- **Uvicorn** - ASGI server
-- **BeautifulSoup4** - Web scraping
-- **Pydantic** - Data validation
-
-## 📋 Prerequisites
-
-- **Node.js** (v18 or higher)
-- **Python** (v3.10 or higher)
-- **Git**
-
-## 🔧 Installation & Setup
-
-### 1. Clone the Repository
-```bash
-
-cd NEU-Chatbot
+### 1. Initial setup
+```powershell
+cd NEU-chatbot-main
+.\setup.ps1
 ```
 
-### 2. Backend Setup
-
-```bash
+### 2. Run backend (Terminal 1)
+```powershell
 cd backend
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# Windows:
-.\venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+.\run.ps1
 ```
+Backend URL: `http://localhost:8000`
 
-### 3. Frontend Setup
-
-```bash
-cd ../frontend
-
-# Install dependencies
-npm install
-```
-
-## ▶️ Running the Bot
-
-### Start Backend Server
-```bash
-cd backend
-.\venv\Scripts\python.exe app.py
-```
-Backend runs on: **http://localhost:8000**
-
-### Start Frontend Server
-```bash
+### 3. Run frontend (Terminal 2)
+```powershell
 cd frontend
-npm run dev
+npm run start
 ```
-Frontend runs on: **http://localhost:5173**
+Frontend URL: `http://127.0.0.1:5173`
 
-## 🌐 Usage
+## API Endpoints
+- `POST /api/chat`
+- `GET /api/health`
+- `GET /api/chat/history/{session_id}`
+- `DELETE /api/chat/session/{session_id}`
 
-1. Open browser to **http://localhost:5173**
-2. Type your question in the chat input
-3. Get instant answers with clickable links
-
-### Example Questions:
-- "Where is CIS faculty?"
-- "Show me on map"
-- "How to register?"
-- "Where is Near East Bank?"
-- "Who is the dean of CIS?"
-
-## 📁 Project Structure
-
-```
-NEU-Chatbot/
-├── backend/
-│   ├── app.py              # FastAPI application
-│   ├── services/
-│   │   └── bot_logic.py    # Chatbot logic + FAQ
-│   ├── routes/
-│   │   └── chat.py         # API endpoints
-│   ├── models/
-│   │   └── message.py      # Pydantic models
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── pages/         # Page components
-│   │   ├── utils/         # API utilities
-│   │   └── types/         # TypeScript types
-│   ├── package.json
-│   └── vite.config.ts
-└── README.md
+## Main Folders
+```text
+backend/
+	app.py
+	routes/
+	services/
+	models/
+frontend/
+	index.html
+	styles.css
+	script.js
+assets/
 ```
 
-## 🎯 API Endpoints
+## Notes
+- No terminal windows are opened automatically by the app itself.
+- If you need strict production behavior, pin dependencies after final testing.
 
-- `POST /api/chat` - Send message, get bot response
-- `GET /api/health` - Health check
-- `POST /api/upload` - File upload (max 10MB)
-
-## 🗺️ Map Integration
-
-The bot provides precise Google Maps links for:
-- Main campus
-- 5 faculty buildings
-- 2 bank locations
-- Library, hospital, sports complex
-- Student dormitories
-- Administrative offices
-
-## 📝 Configuration
-
-### Backend (.env)
-```
-HOST=127.0.0.1
-PORT=8000
-DEBUG=True
-```
-
-### Frontend (.env)
-```
-VITE_API_URL=http://localhost:8000
-```
-
-## 🧪 Testing
-
-Ask the bot:
-```
-"show me on map"
-"where is near east bank"
-"who is nadire cavus"
-"how to register"
-```
-
-## 📄 License
-
-MIT License
+## License
+MIT
 
 
-
-## 🙏 Acknowledgments
-
-- Near East University for institutional data
-- NEU website (neu.edu.tr) for information source
